@@ -30,6 +30,10 @@ func Register(templates *template.Template) {
 	newClientController.template = templates.Lookup("newClient.html")
 	router.HandleFunc("/newClient",newClientController.handle)
 	
+	updateClientController := new(updateClientController)
+	updateClientController.template = templates.Lookup("newClient.html") //same page as new client
+	router.HandleFunc("/update/{id}", updateClientController.handle)
+	
 	http.Handle("/", router)
 	
 	//Resources
