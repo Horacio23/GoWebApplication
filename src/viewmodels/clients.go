@@ -17,9 +17,20 @@ type Client struct {
 	Id int
 }
 
-func GetClient(id int) Clients {
+func GetClients() Clients {
+	//TODO: get list of clients from the database
+	
 	result := Clients{
 		Title: "Clients",
+		Active: "clients",
+	}
+	
+	return result
+}
+
+func GetClient(id int) Clients {
+	result := Clients{
+		Title: "Client",
 		Active: "clients",
 	}
 
@@ -53,4 +64,21 @@ func GetClient(id int) Clients {
 	return result
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -14,17 +14,21 @@ func Register(templates *template.Template) {
 	
 	router := mux.NewRouter()
 	
-	hc := new(homeController)
-	hc.template = templates.Lookup("index.html")
-	router.HandleFunc("/home",hc.get)
+	homeController := new(homeController)
+	homeController.template = templates.Lookup("index.html")
+	router.HandleFunc("/home",homeController.get)
 	
-	fc := new(formsController)
-	fc.template = templates.Lookup("forms.html")
-	router.HandleFunc("/forms",fc.get)
+	formsController := new(formsController)
+	formsController.template = templates.Lookup("forms.html")
+	router.HandleFunc("/forms",formsController.get)
 
-	cc := new(clientController)
-	cc.template = templates.Lookup("clients.html")
-	router.HandleFunc("/client/{id}",cc.get)
+	clientController := new(clientController)
+	clientController.template = templates.Lookup("clients.html")
+	router.HandleFunc("/client/{id}",clientController.get)
+	
+	newClientController := new(newClientController)
+	newClientController.template = templates.Lookup("newClient.html")
+	router.HandleFunc("/newClient",newClientController.handle)
 	
 	http.Handle("/", router)
 	

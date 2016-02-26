@@ -6,6 +6,7 @@ import (
 	"viewmodels"
 	"github.com/gorilla/mux"
 	"strconv"
+	"controllers/util"
 )
 
 
@@ -24,7 +25,9 @@ func (this *clientController) get(w http.ResponseWriter, req *http.Request) {
 		vm := viewmodels.GetClient(id)
 	
 		w.Header().Add("Content-Type", "text/html")
-		this.template.Execute(w,vm)
+		responseWriter  := util.GetResponseWriter(w , req)
+		defer responseWriter.Close()
+		this.template.Execute(responseWriter,vm)
 	}else{
 		w.WriteHeader(404)
 	}
