@@ -16,7 +16,9 @@ func Register(templates *template.Template) {
 	
 	homeController := new(homeController)
 	homeController.template = templates.Lookup("index.html")
+	homeController.loginTemplate = templates.Lookup("login.html")
 	router.HandleFunc("/home",homeController.get)
+	router.HandleFunc("/login", homeController.login)
 	
 	formsController := new(formsController)
 	formsController.template = templates.Lookup("forms.html")
@@ -33,6 +35,8 @@ func Register(templates *template.Template) {
 	updateClientController := new(updateClientController)
 	updateClientController.template = templates.Lookup("newClient.html") //same page as new client
 	router.HandleFunc("/update/{id}", updateClientController.handle)
+	
+	
 	
 	http.Handle("/", router)
 	

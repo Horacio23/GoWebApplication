@@ -1,41 +1,28 @@
 package models
 
 import (
-
+	"errors"
+	"strconv"
 )
 
 type Client struct {
-	Name string
-	Address string
-	Phone string
 	Id int
+	FirstName string
+	LastName string
+	Address string
+	City string
+	State string
+	Zip string
+	Phone string
+	EntranceDate string
+	TransactionDate string
 }
 
-func (this *Client) SetName(name string) {
-	this.Name = name
-}
 
-func (this *Client) SetAddress(address string) {
-	this.Address = address
-}
-
-func (this *Client) SetPhone(phone string) {
-	this.Phone = phone
-}
-
-func (this *Client) SetId(id int) {
-	this.Id = id
-}
 
 func GetClients() []Client {
 	//TODO: get list of clients from the database
 	result := []Client{
-		Client{
-			Name: "horacio",
-			Address: "555 nw 19th, Miami, Fl, 32182",
-			Phone: "786-555-4785",
-			Id:1,
-		},
 	}
 	
 	return result
@@ -44,16 +31,46 @@ func GetClients() []Client {
 func GetClient(id int) Client {
 	result := Client{}
 
-	if id == 1 {
-		result = Client{
-			Name: "Geraldo",
-			Address: "555 nw 19th, Miami, Fl, 32182",
-			Phone: "786-555-4785",
-			Id:1,
-		}
-	}
+	
 
 	
 	return result
+	
+}
+
+func CreateClient(firstName string, lastName string, address string, city string, state string, zip string, phone string, entranceDate string, transactionDate string) (Client, error) {
+	result := Client{}
+	result.FirstName = firstName
+	result.LastName = lastName
+	result.Address = address
+	result.City = city
+	result.Zip = zip
+	result.State = state
+	result.Phone = phone
+	result.EntranceDate = entranceDate
+	result.TransactionDate = transactionDate
+	
+	db, err := getDBConnection()
+	if err == nil {
+		defer db.Close()
+		sbResult, err := db.Exec(`INSERT INTO clients
+			(first_name, last_name, address, city, state, zip, phone, entrance_date, transaction_date)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+			RETURNING id`, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate)
+		
+		
+		id, rsErr := sbResult.LastInsertId()
+		result.Id = id
+		
+		
+		
+		if err == nil {
+			return result, nil
+		}else{
+			return Client{}, errors.New("Unable to create Client in the database: "+err.Error())
+		}
+	}else{
+		return result, errors.New("Unable to get a database connection to save the session")
+	}
 	
 }

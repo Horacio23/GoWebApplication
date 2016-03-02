@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "_head.html" .Title}}
+<body>
+
+
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        {{template "_topbar.html" .Active}}
+      </nav>
+
+
+      <div class="col-lg-3"></div>
+      <div id="page-wrapper" class="col-lg-6">
+          <form action="/login" method="post" role="form">
+
+
+
+              <div class="form-group">
+                  <label>Username</label>
+                  <input name="username" class="form-control" placeholder="Enter Username">
+              </div>
+
+              <div class="form-group">
+                  <label>Password</label>
+                  <input name="address" class="form-control" placeholder="Enter Password">
+              </div>
+
+
+                  <div class="columns text-right">
+                      <button class="btn btn-primary" type="submit"> Sign In </button>
+                  </div>
+
+
+            </form>
+
+      </div>
+      <div class="col-lg-3"></div>
+
+
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

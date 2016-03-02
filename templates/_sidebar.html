@@ -1,0 +1,32 @@
+<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+<div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+        <li {{if eq . "home"}} class=" active" {{end}}>
+            <a href="/home"><i class="fa fa-fw fa-dashboard"></i> Home </a>
+        </li >
+        <li {{if eq . "forms"}} class=" active" {{end}}>
+            <a href="/forms"><i class="fa fa-fw fa-edit"></i> Forms</a>
+        </li>
+        <li {{if eq . "clients"}} class=" active" {{end}}>
+            <a href="/clients"><i class="fa fa-fw fa-edit"></i> Clients</a>
+        </li>
+        <li {{if eq . "newClient"}} class=" active" {{end}}>
+            <a href="/newClient"><i class="fa fa-fw fa-edit"></i> Create New Client</a>
+        </li>
+        <li {{if eq . "update"}} class=" active" {{end}}>
+            <a href="/update/1"><i class="fa fa-fw fa-edit"></i> Update</a>
+        </li>
+        <li>
+            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+            <ul id="demo" class="collapse">
+                <li class="{{if eq . "other"}} active {{end}}">
+                    <a href="#">Dropdown Item</a>
+                </li class="{{if eq . "other"}} active {{end}}">
+                <li>
+                    <a href="#">Dropdown Item</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- /.navbar-collapse -->

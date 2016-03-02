@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"text/template"
 	"viewmodels"
-	"fmt"
+	"models"
 )
 
 type newClientController struct {
@@ -17,14 +17,36 @@ func (this *newClientController) handle(w http.ResponseWriter, req *http.Request
 	defer responseWriter.Close()
 	
 	vm := viewmodels.GetNewClient()
-	fmt.Println(vm.Client)
+	
 	
 	//This part handles what to do if the request was a post
-//	if req.Method == "POST" {
-//		vm.Client.SetName(req.FormValue("name"))
-//		vm.Client.SetAddress(req.FormValue("address"))
-//		vm.Client.SetPhone(req.FormValue("phone"))
-//	}
+	if req.Method == "POST" {
+		firstName := req.FormValue("firstName")
+		lastName := req.FormValue("lastName")
+		address := req.FormValue("address")
+		city := req.FormValue("city")
+		state := req.FormValue("state")
+		zip := req.FormValue("zip")
+		phone := req.FormValue("phone")
+		entranceDate := req.FormValue("entranceDate")
+		transactionDate := req.FormValue("transactionDate")
+		client, err := models.CreateClient(firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate)
+		
+		if err == nil{
+//			vm.Client.FirstName = firstName
+//			vm.Client.LastName = lastName
+//			vm.Client.Address = address
+//			vm.Client.City = city
+//			vm.Client.State = state
+//			vm.Client.Zip = zip
+//			vm.Client.Phone = phone
+//			vm.Client.EntranceDate = entranceDate
+//			vm.Client.TransactionDate = transactionDate
+
+			vm.Client = client
+		}
+		
+	}
 	responseWriter.Header().Add("Content-Type", "text/html")
 	this.template.Execute(responseWriter, vm)
 }

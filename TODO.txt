@@ -1,0 +1,18 @@
+//TODO: cast int64 into int and check query works
+
+IDEAS:
+
+Essentials:
+-create clients
+-get clients
+-check how to use the age function from sql
+
+Nice To Have:
+-the template shows the clients with a certain date in a different color
+-be able to sort full list of clients by date
+
+Eventually:
+-Create updates that show how many clients have changed date status (1 year or 5, etc)
+
+Lastly:
+-Be able to fill the forms out in the website.

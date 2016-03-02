@@ -26,12 +26,12 @@ func (this *updateClientController) handle(w http.ResponseWriter, req *http.Requ
 	if err ==nil {
 		vm := viewmodels.GetUpdateClient(id)
 		
-		//This part handles what to do if the request was a post
-		if req.Method == "POST" {
-			vm.Client.SetName(req.FormValue("name"))
-			vm.Client.SetAddress(req.FormValue("address"))
-			vm.Client.SetPhone(req.FormValue("phone"))
-		}
+//		//This part handles what to do if the request was a post
+//		if req.Method == "POST" {
+//			vm.Client.SetName(req.FormValue("name"))
+//			vm.Client.SetAddress(req.FormValue("address"))
+//			vm.Client.SetPhone(req.FormValue("phone"))
+//		}
 	
 		w.Header().Add("Content-Type", "text/html")
 		responseWriter  := util.GetResponseWriter(w , req)
