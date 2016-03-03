@@ -2,7 +2,8 @@ package models
 
 import (
 	"errors"
-	"strconv"
+	"fmt"
+	"time"
 )
 
 type Client struct {
@@ -28,13 +29,39 @@ func GetClients() []Client {
 	return result
 }
 
-func GetClient(id int) Client {
+func GetClient(id int) (Client, error) {
 	result := Client{}
-
+	
+	var entranceDate time.Time 
+	var transactionDate time.Time
+	
+	db, err := getDBConnection()
+	
+	if err == nil {
+		defer db.Close()
+		dbErr := db.QueryRow(`SELECT id, first_name, last_name, address, city, state, zip, phone, 
+       entrance_date, transaction_date FROM clients where id=$1`,id).Scan(&result.Id, &result.FirstName, &result.LastName, &result.Address, &result.City, &result.State, &result.Zip, &result.Phone, &entranceDate, &transactionDate)
+		
+		result.EntranceDate = entranceDate.String()
+		result.TransactionDate = transactionDate.String()
+		
+		fmt.Println("result id", id, "result",result)
+		fmt.Println(dbErr)
+		if dbErr == nil {
+			fmt.Println("no error")
+			return result, nil
+		}else{
+			fmt.Println("error in query")
+			return Client{}, errors.New("Unable to create Client in the database: "+err.Error())
+		}
+	}else{
+		fmt.Println("error with the db")
+		return result, errors.New("Unable to get a database connection to save the session")
+	}
 	
 
 	
-	return result
+	return result, nil
 	
 }
 
@@ -53,16 +80,10 @@ func CreateClient(firstName string, lastName string, address string, city string
 	db, err := getDBConnection()
 	if err == nil {
 		defer db.Close()
-		sbResult, err := db.Exec(`INSERT INTO clients
+		err := db.QueryRow(`INSERT INTO clients
 			(first_name, last_name, address, city, state, zip, phone, entrance_date, transaction_date)
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-			RETURNING id`, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate)
-		
-		
-		id, rsErr := sbResult.LastInsertId()
-		result.Id = id
-		
-		
+			RETURNING id`, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate).Scan(&result.Id)
 		
 		if err == nil {
 			return result, nil
@@ -74,3 +95,13 @@ func CreateClient(firstName string, lastName string, address string, city string
 	}
 	
 }
+
+//func CreateClient(firstName string, lastName string, address string, city string, state string, zip string, phone string, entranceDate string, transactionDate string) (Client, error) {
+//	
+//	
+//	
+//}
+
+
+
+

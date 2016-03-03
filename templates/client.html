@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "_head.html" .Title}}
+<body>
+
+    <div id="wrapper">
+
+      {{template "_header.html" .Active}}
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+              <div class="row">
+                <h1>{{.Client.FirstName}} {{.Client.LastName}}</h1>
+              </div>
+              <div class="row">
+                <p>{{.Client.Address}}</p>
+              </div>
+              <div class="row">
+                <p>{{.Client.City}}</p>
+                <p>{{.Client.State}}</p>
+                <p>{{.Client.Zip}}</p>
+              </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+  {{template "_footer.html"}}
+
+</body>
+
+</html>

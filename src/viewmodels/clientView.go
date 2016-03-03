@@ -10,13 +10,11 @@ type ClientView struct {
 	Client models.Client
 }
 
-func GetClient(id int) ClientView {
+func GetClientView() ClientView {
 	result := ClientView{
 		Title: "Client",
 		Active: "clients",
 	}
-
-	result.Client = models.GetClient(id)
 
 	return result
 	

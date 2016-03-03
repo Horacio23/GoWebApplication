@@ -4,36 +4,67 @@
 <body>
 
     <div id="wrapper">
-      
+
       {{template "_header.html" .Active}}
         <div id="page-wrapper">
 
             <div class="container-fluid">
-              <form action="newClient" method="post" role="form">
+              <form action="newClient" method="POST" role="form">
 
-
-
-                  <div class="form-group">
-                      <label>Name</label>
-                      <input name="name" class="form-control" placeholder="{{if eq .Client.Name ""}} Enter a Name {{end}}" value="{{.Client.Name}}">
+                <div id="form-wrapper" class="col-lg-10">
+                  <div class="row ">
+                    <div class="col-lg-6 form-group">
+                        <label>Name</label>
+                        <input name="firstName" class="form-control" placeholder="{{if eq .Client.FirstName ""}} Enter a Name {{end}}" value="{{.Client.FirstName}}">
+                    </div>
+                    <div class="col-lg-6 form-group">
+                        <label>Name</label>
+                        <input name="lastName" class="form-control" placeholder="{{if eq .Client.LastName ""}} Enter a Name {{end}}" value="{{.Client.LastName}}">
+                    </div>
                   </div>
-
-                  <div class="form-group">
-                      <label>Address</label>
-                      <input name="address" class="form-control" placeholder="{{if eq .Client.Address ""}} Enter an Address {{end}}" value="{{.Client.Address}}">
+                  <div class="row ">
+                    <div class="col-lg-12 form-group">
+                        <label>Address</label>
+                        <input name="address" class="form-control" placeholder="{{if eq .Client.Address ""}} Enter an Address {{end}}" value="{{.Client.Address}}">
+                    </div>
                   </div>
-
-                  <div class="form-group">
-                      <label>Phone Number</label>
-                      <input name="phone" class="form-control" placeholder="{{if eq .Client.Phone ""}} Enter a Phone Number  {{end}}" value="{{.Client.Phone}}">
-                  </div>
-
                   <div class="row">
-                      <div class="columns small-12 text-right">
-                          <button class="small" type="submit"> Save </button>
+                    <div class="col-lg-3 form-group">
+                        <label>City</label>
+                        <input name="city" class="form-control" placeholder="{{if eq .Client.City ""}} City {{end}}" value="{{.Client.City}}">
+                    </div>
+                    <div class="col-lg-1 form-group">
+                        <label>State</label>
+                        <input name="state" class="form-control" placeholder="{{if eq .Client.State ""}} State {{end}}" value="{{.Client.State}}">
+                    </div>
+                    <div class="col-lg-2 form-group">
+                        <label>Zip Code</label>
+                        <input name="zip" class="form-control" placeholder="{{if eq .Client.Zip ""}} Code {{end}}" value="{{.Client.Zip}}">
+                    </div>
+                  </div>
+
+                  <div class="row ">
+                    <div class="col-lg-3 form-group">
+                        <label>Phone Number</label>
+                        <input name="phone" class="form-control" placeholder="{{if eq .Client.Phone ""}} Phone Number  {{end}}" value="{{.Client.Phone}}">
+                    </div>
+                  </div>
+                  <div class="row ">
+                    <div class="col-lg-2 form-group">
+                        <label>Entrance Date</label>
+                        <input name="entranceDate" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} Date  {{end}}" value="{{.Client.EntranceDate}}">
+                    </div>
+                    <div class="col-lg-2 form-group">
+                        <label>Transaction Date</label>
+                        <input name="transactionDate" class="form-control" placeholder="{{if eq .Client.TransactionDate ""}} Date  {{end}}" value="{{.Client.TransactionDate}}">
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-lg-2">
+                          <button class="btn btn-primary" type="submit"> {{if eq .Active "newClient"}} Create {{else}} Save {{end}}</button>
                       </div>
                   </div>
-
+              </div>
                 </form>
             </div>
             <!-- /.container-fluid -->

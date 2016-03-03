@@ -6,6 +6,7 @@ import (
 	"text/template"
 	"viewmodels"
 	"models"
+	"strconv"
 )
 
 type newClientController struct {
@@ -16,11 +17,16 @@ func (this *newClientController) handle(w http.ResponseWriter, req *http.Request
 	responseWriter := util.GetResponseWriter(w, req)
 	defer responseWriter.Close()
 	
-	vm := viewmodels.GetNewClient()
+	
+	
 	
 	
 	//This part handles what to do if the request was a post
 	if req.Method == "POST" {
+		println("POST method received for New Client")
+		
+		vm := viewmodels.GetClientView()
+		
 		firstName := req.FormValue("firstName")
 		lastName := req.FormValue("lastName")
 		address := req.FormValue("address")
@@ -44,10 +50,13 @@ func (this *newClientController) handle(w http.ResponseWriter, req *http.Request
 //			vm.Client.TransactionDate = transactionDate
 
 			vm.Client = client
+			http.Redirect(responseWriter, req, "/client/"+strconv.Itoa(client.Id), http.StatusFound)
 		}
 		
+	}else{
+		vm := viewmodels.GetNewClient()
+		responseWriter.Header().Add("Content-Type", "text/html")
+		this.template.Execute(responseWriter, vm)
 	}
-	responseWriter.Header().Add("Content-Type", "text/html")
-	this.template.Execute(responseWriter, vm)
 }
 

@@ -11,11 +11,11 @@ type UpdateClientView struct {
 }
 
 func  GetUpdateClient(id int) UpdateClientView{
-	client := models.GetClient(id)
+//	client := models.GetClient(id)
 	result:= UpdateClientView{
 		Title: "Client Update Page",
 		Active: "update",
-		Client: client,
+		
 	}
 	
 	return result
