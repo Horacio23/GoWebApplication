@@ -11,25 +11,26 @@ import (
 	"fmt"
 )
 
-//type clientsController struct {
-//	template *template.Template
-//}
-//
-//func (this *clientController) get(w http.ResponseWriter, req *http.Request) {
-//	vm := viewmodels.GetClients()
-//	
-//	
-//	if err ==nil {
-//		
-//	
-//		w.Header().Add("Content-Type", "text/html")
-//		responseWriter  := util.GetResponseWriter(w , req)
-//		defer responseWriter.Close()
-//		this.template.Execute(responseWriter,vm)
-//	}else{
-//		w.WriteHeader(404)
-//	}
-//}
+type clientsController struct {
+	template *template.Template
+}
+
+func (this *clientsController) get(w http.ResponseWriter, req *http.Request) {
+	vm := viewmodels.GetClients()
+	clients, err := models.GetClients()
+	
+	if err == nil {
+		vm.Clients = clients
+	
+		w.Header().Add("Content-Type", "text/html")
+		responseWriter  := util.GetResponseWriter(w , req)
+		defer responseWriter.Close()
+		this.template.Execute(responseWriter,vm)
+	}else{
+		fmt.Println("Error getting clients: "+err.Error())
+		w.WriteHeader(404)
+	}
+}
 
 type clientController struct {
 	template *template.Template
@@ -57,8 +58,11 @@ func (this *clientController) get(w http.ResponseWriter, req *http.Request) {
 			defer responseWriter.Close()
 			this.template.Execute(responseWriter,vm)
 		}else{
+			fmt.Println("Error getting client: "+dbErr.Error())
 			w.WriteHeader(404)
 		}
+	}else{
+		fmt.Println("Error converting string to int: "+scErr.Error())
 	}
 	
 }

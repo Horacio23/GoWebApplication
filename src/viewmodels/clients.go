@@ -18,7 +18,7 @@ func GetClients() Clients {
 		Title: "Clients",
 		Active: "clients",
 	}
-	result.Clients = models.GetClients()
+
 	return result
 }
 

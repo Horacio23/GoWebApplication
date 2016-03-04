@@ -10,8 +10,8 @@ type UpdateClientView struct {
 	Client models.Client
 }
 
-func  GetUpdateClient(id int) UpdateClientView{
-//	client := models.GetClient(id)
+func  GetUpdateClient() UpdateClientView{
+
 	result:= UpdateClientView{
 		Title: "Client Update Page",
 		Active: "update",

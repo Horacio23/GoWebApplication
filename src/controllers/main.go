@@ -24,6 +24,10 @@ func Register(templates *template.Template) {
 	formsController.template = templates.Lookup("forms.html")
 	router.HandleFunc("/forms",formsController.get)
 
+	clientsController := new(clientsController)
+	clientsController.template = templates.Lookup("clients.html")
+	router.HandleFunc("/clients",clientsController.get)
+	
 	clientController := new(clientController)
 	clientController.template = templates.Lookup("client.html")
 	router.HandleFunc("/client/{id}",clientController.get)

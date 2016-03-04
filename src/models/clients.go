@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
+	"controllers/util"
 )
 
 type Client struct {
@@ -21,12 +22,62 @@ type Client struct {
 
 
 
-func GetClients() []Client {
+func GetClients() ([]Client, error) {
 	//TODO: get list of clients from the database
-	result := []Client{
-	}
+	result := []Client{}
 	
-	return result
+	db, dbErr := getDBConnection()
+	
+	if dbErr == nil{
+		defer db.Close()
+		
+		row, qErr := db.Query(`SELECT * FROM clients`)
+		
+		if qErr == nil{
+			var id int
+			var firstName string
+			var lastName string
+			var address string
+			var city string
+			var state string
+			var zip string
+			var phone string
+			var entranceDate time.Time
+			var transactionDate time.Time
+			
+			defer row.Close()
+			
+			for row.Next() {
+				sErr := row.Scan(&id, &firstName, &lastName, &address, &city, &state, &zip, &phone, &entranceDate, &transactionDate)
+				if sErr == nil {
+					client := Client{
+						Id: id,
+						FirstName: firstName,
+						LastName: lastName,
+						Address: address,
+						City: city,
+						State: state,
+						Zip: zip,
+						Phone: phone,
+						EntranceDate: util.GetDate(entranceDate),
+						TransactionDate: util.GetDate(transactionDate),
+					}
+					
+					result = append(result, client)
+					
+				}else{
+					return result, errors.New("Unable to get a field from the result query:" + sErr.Error())
+				}
+			}
+			
+			return result, nil
+			
+		}else{
+			return result, errors.New("Unable to run query")
+		}
+	}else{
+		return result, errors.New("Unable to get a database connection to save the session")
+	}
 }
 
 func GetClient(id int) (Client, error) {
@@ -42,11 +93,10 @@ func GetClient(id int) (Client, error) {
 		dbErr := db.QueryRow(`SELECT id, first_name, last_name, address, city, state, zip, phone, 
        entrance_date, transaction_date FROM clients where id=$1`,id).Scan(&result.Id, &result.FirstName, &result.LastName, &result.Address, &result.City, &result.State, &result.Zip, &result.Phone, &entranceDate, &transactionDate)
 		
-		result.EntranceDate = entranceDate.String()
-		result.TransactionDate = transactionDate.String()
+		result.EntranceDate = util.GetDate(entranceDate)
+		result.TransactionDate = util.GetDate(transactionDate)
 		
-		fmt.Println("result id", id, "result",result)
-		fmt.Println(dbErr)
+		
 		if dbErr == nil {
 			fmt.Println("no error")
 			return result, nil

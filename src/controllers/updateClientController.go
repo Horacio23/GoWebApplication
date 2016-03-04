@@ -7,6 +7,7 @@ import (
 	"viewmodels"
 	"github.com/gorilla/mux"
 	"strconv"
+	"models"
 )
 
 type updateClientController struct {
@@ -21,24 +22,43 @@ func (this *updateClientController) handle(w http.ResponseWriter, req *http.Requ
 	
 	idRaw := vars["id"]
 	
-	id, err := strconv.Atoi(idRaw)	//Atoi stands for askii to int
+	id, scErr := strconv.Atoi(idRaw)	//Atoi stands for askii to int
 	
-	if err ==nil {
-		vm := viewmodels.GetUpdateClient(id)
+	if scErr ==nil {
+		vm := viewmodels.GetUpdateClient()
 		
-//		//This part handles what to do if the request was a post
-//		if req.Method == "POST" {
-//			vm.Client.SetName(req.FormValue("name"))
-//			vm.Client.SetAddress(req.FormValue("address"))
-//			vm.Client.SetPhone(req.FormValue("phone"))
-//		}
+		if client, err := models.GetClient(id); err == nil{
+			//this is the client that is to be updated
+			vm.Client = client
+			
+			//This part handles what to do if the request was a post
+			if req.Method == "POST" {
+				firstName := req.FormValue("firstName")
+				lastName := req.FormValue("lastName")
+				address := req.FormValue("address")
+				city := req.FormValue("city")
+				state := req.FormValue("state")
+				zip := req.FormValue("zip")
+				phone := req.FormValue("phone")
+				entranceDate := req.FormValue("entranceDate")
+				transactionDate := req.FormValue("transactionDate")
+				
+		
+				if client, ccErr := models.CreateClient(firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate); ccErr == nil{
+					vm.Client = client
+					http.Redirect(responseWriter, req, "/client/"+strconv.Itoa(client.Id), http.StatusFound)
+				}
+			}
+		
+			w.Header().Add("Content-Type", "text/html")
+			responseWriter  := util.GetResponseWriter(w , req)
+			defer responseWriter.Close()
+			this.template.Execute(responseWriter,vm)
+		}
+		
 	
-		w.Header().Add("Content-Type", "text/html")
-		responseWriter  := util.GetResponseWriter(w , req)
-		defer responseWriter.Close()
-		this.template.Execute(responseWriter,vm)
 	}else{
-		println(err.Error())
+		println(scErr.Error())
 		w.WriteHeader(404)
 	}
 	

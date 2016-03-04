@@ -22,10 +22,11 @@
 
                       {{range .Clients}}
                           <tr>
-                              <td>{{.Name}}</td>
-                              <td>{{.Address}}</td>
-                              <td>{{.Phone}}</td>
-                          </tr>
+                              <td><a href="/client/{{.Id}}">{{.FirstName}} {{.LastName}}</a></td>
+                              <td>{{.EntranceDate}}</td>
+                              <td>{{.TransactionDate}}</td>
+                              <td><a class="btn btn-danger" href="/update/{{.Id}}"> Update</a>
+                          </tr>dds
 
                       {{end}}
                     </tbody>
