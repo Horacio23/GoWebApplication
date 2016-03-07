@@ -3,8 +3,7 @@
 IDEAS:
 
 Essentials:
--create clients
--get clients
+-creating an ajax call to get client and put it in a modal
 -check how to use the age function from sql
 
 Nice To Have:

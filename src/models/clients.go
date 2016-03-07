@@ -146,6 +146,38 @@ func CreateClient(firstName string, lastName string, address string, city string
 	
 }
 
+func UpdateClient(id int, firstName string, lastName string, address string, city string, state string, zip string, phone string, entranceDate string, transactionDate string) (Client, error) {
+	result := Client{}
+	result.Id = id
+	result.FirstName = firstName
+	result.LastName = lastName
+	result.Address = address
+	result.City = city
+	result.Zip = zip
+	result.State = state
+	result.Phone = phone
+	result.EntranceDate = entranceDate
+	result.TransactionDate = transactionDate
+	
+	db, err := getDBConnection()
+	if err == nil {
+		defer db.Close()
+		_, err := db.Query(`UPDATE clients
+			set first_name=$1, last_name=$2, address=$3, city=$4, state=$5, zip=$6, phone=$7, entrance_date=$8, transaction_date=$9
+			WHERE id=$10`, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate, id)
+		
+		if err == nil {
+			return result, nil
+		}else{
+			return Client{}, errors.New("Unable to create Client in the database: "+err.Error())
+		}
+	}else{
+		return result, errors.New("Unable to get a database connection to save the session")
+	}
+	
+}
+
+
 //func CreateClient(firstName string, lastName string, address string, city string, state string, zip string, phone string, entranceDate string, transactionDate string) (Client, error) {
 //	
 //	

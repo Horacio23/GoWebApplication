@@ -44,7 +44,7 @@ func (this *updateClientController) handle(w http.ResponseWriter, req *http.Requ
 				transactionDate := req.FormValue("transactionDate")
 				
 		
-				if client, ccErr := models.CreateClient(firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate); ccErr == nil{
+				if client, ccErr := models.UpdateClient(id, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate); ccErr == nil{
 					vm.Client = client
 					http.Redirect(responseWriter, req, "/client/"+strconv.Itoa(client.Id), http.StatusFound)
 				}

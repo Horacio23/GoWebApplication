@@ -29,7 +29,7 @@ func Register(templates *template.Template) {
 	router.HandleFunc("/clients",clientsController.get)
 	
 	clientController := new(clientController)
-	clientController.template = templates.Lookup("client.html")
+	clientController.template = templates.Lookup("clientModal.html")
 	router.HandleFunc("/client/{id}",clientController.get)
 	
 	newClientController := new(newClientController)

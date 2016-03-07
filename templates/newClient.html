@@ -6,10 +6,10 @@
     <div id="wrapper">
 
       {{template "_header.html" .Active}}
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="height:100%">
 
             <div class="container-fluid">
-              <form action="newClient" method="POST" role="form">
+              <form action="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}" method="POST" role="form">
 
                 <div id="form-wrapper" class="col-lg-10">
                   <div class="row ">
@@ -52,11 +52,11 @@
                   <div class="row ">
                     <div class="col-lg-2 form-group">
                         <label>Entrance Date</label>
-                        <input name="entranceDate" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} Date  {{end}}" value="{{.Client.EntranceDate}}">
+                        <input name="entranceDate" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.EntranceDate}}">
                     </div>
                     <div class="col-lg-2 form-group">
                         <label>Transaction Date</label>
-                        <input name="transactionDate" class="form-control" placeholder="{{if eq .Client.TransactionDate ""}} Date  {{end}}" value="{{.Client.TransactionDate}}">
+                        <input name="transactionDate" class="form-control" placeholder="{{if eq .Client.TransactionDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.TransactionDate}}">
                     </div>
                   </div>
                   <div class="row">

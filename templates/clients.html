@@ -10,12 +10,13 @@
 
             <div class="container-fluid">
 
-                  <table>
+                  <table class="table">
                       <thead>
                           <tr>
                               <th>Name</th>
                               <th>Address</th>
                               <th>Phone Number</th>
+                              <th></th>
                           </tr>
                       </thead>
                       <tbody>
@@ -23,14 +24,15 @@
                       {{range .Clients}}
                           <tr>
                               <td><a href="/client/{{.Id}}">{{.FirstName}} {{.LastName}}</a></td>
-                              <td>{{.EntranceDate}}</td>
+                              <td onclick="getClient({{.Id}})">{{.EntranceDate}}</td>
                               <td>{{.TransactionDate}}</td>
-                              <td><a class="btn btn-danger" href="/update/{{.Id}}"> Update</a>
-                          </tr>dds
+                              <td><a class="btn btn-warning glyphicon glyphicon-pencil small" href="/update/{{.Id}}"></a>
+                          </tr>
 
                       {{end}}
                     </tbody>
                 </table>
+                <div id="tempModal"></div>
               </div>
             </div>
             <!-- /.container-fluid -->
@@ -40,7 +42,18 @@
 
     </div>
     <!-- /#wrapper -->
-
+    <script>
+      function getClient(id){
+        $.ajax("/client/"+id).done(function(data){
+            console.log("yay, we got the data");
+            console.log(data);
+            $("#tempModal").html(data);
+            $("#clientModal").modal("show");
+          }).fail(function(){
+            alert("Your fault");
+          })
+      }
+    </script>
     {{template "_footer.html"}}
 
 </body>
