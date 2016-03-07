@@ -23,7 +23,7 @@
 
                       {{range .Clients}}
                           <tr>
-                              <td><a href="/client/{{.Id}}">{{.FirstName}} {{.LastName}}</a></td>
+                              <td><a href="#" onclick="getClient({{.Id}})">{{.FirstName}} {{.LastName}}</a></td>
                               <td onclick="getClient({{.Id}})">{{.EntranceDate}}</td>
                               <td>{{.TransactionDate}}</td>
                               <td><a class="btn btn-warning glyphicon glyphicon-pencil small" href="/update/{{.Id}}"></a>

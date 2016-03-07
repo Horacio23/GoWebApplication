@@ -6,7 +6,6 @@ import (
 	"text/template"
 	"viewmodels"
 	"models"
-	"strconv"
 )
 
 type newClientController struct {
@@ -50,7 +49,7 @@ func (this *newClientController) handle(w http.ResponseWriter, req *http.Request
 //			vm.Client.TransactionDate = transactionDate
 
 			vm.Client = client
-			http.Redirect(responseWriter, req, "/client/"+strconv.Itoa(client.Id), http.StatusFound)
+			http.Redirect(responseWriter, req, "/clients", http.StatusFound)
 		}
 		
 	}else{

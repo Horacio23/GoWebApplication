@@ -3,7 +3,8 @@
 IDEAS:
 
 Essentials:
--creating an ajax call to get client and put it in a modal
+-implementing a delete method (possibly with safeguard so it doest really get deleted)
+-add the las transaction, and the notes field to the database
 -check how to use the age function from sql
 
 Nice To Have:

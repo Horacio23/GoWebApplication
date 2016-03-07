@@ -46,7 +46,7 @@ func (this *updateClientController) handle(w http.ResponseWriter, req *http.Requ
 		
 				if client, ccErr := models.UpdateClient(id, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate); ccErr == nil{
 					vm.Client = client
-					http.Redirect(responseWriter, req, "/client/"+strconv.Itoa(client.Id), http.StatusFound)
+					http.Redirect(responseWriter, req, "/clients", http.StatusFound)
 				}
 			}
 		
