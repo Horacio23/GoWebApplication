@@ -35,7 +35,7 @@
                     </div>
                     <div class="col-lg-1 form-group">
                         <label>State</label>
-                        <input name="state" class="form-control" placeholder="{{if eq .Client.State ""}} State {{end}}" value="{{.Client.State}}">
+                        <input name="state" class="form-control" placeholder="{{if eq .Client.State ""}}--{{end}}" value="{{.Client.State}}">
                     </div>
                     <div class="col-lg-2 form-group">
                         <label>Zip Code</label>
@@ -46,17 +46,17 @@
                   <div class="row ">
                     <div class="col-lg-3 form-group">
                         <label>Phone Number</label>
-                        <input name="phone" class="form-control" placeholder="{{if eq .Client.Phone ""}} Phone Number  {{end}}" value="{{.Client.Phone}}">
+                        <input name="phone" class="form-control" placeholder="{{if eq .Client.Phone ""}} xxx-xxx-xxxx {{end}}" value="{{.Client.Phone}}">
                     </div>
                   </div>
                   <div class="row ">
                     <div class="col-lg-2 form-group">
                         <label>Entrance Date</label>
-                        <input name="entranceDate" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.EntranceDate}}">
+                        <input name="entranceDate" data-provide="datepicker" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.EntranceDate}}">
                     </div>
                     <div class="col-lg-2 form-group">
                         <label>Transaction Date</label>
-                        <input name="transactionDate" class="form-control" placeholder="{{if eq .Client.TransactionDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.TransactionDate}}">
+                        <input data-provide="datepicker" name="transactionDate" class="form-control date" placeholder="{{if eq .Client.TransactionDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.TransactionDate}}">
                     </div>
                   </div>
                   <div class="row">

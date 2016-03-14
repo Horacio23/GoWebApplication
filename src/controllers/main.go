@@ -50,6 +50,7 @@ func Register(templates *template.Template) {
 	http.HandleFunc("/font-awesome/", serveResource)
 	http.HandleFunc("/fonts/", serveResource)
 	http.HandleFunc("/js/", serveResource)
+	http.HandleFunc("/bootstrap-datepicker/", serveResource)
 }
 
 func serveResource(w http.ResponseWriter, req *http.Request) {

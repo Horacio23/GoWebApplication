@@ -1,0 +1,28 @@
+.center{
+  text-align:center;
+}
+.color-line{
+  height: 6px;
+  background-image: linear-gradient(to right, #34495e, #34495e 25%, #9b59b6 25%, #9b59b6 35%, #3498db 35%, #3498db 45%, #62cb31 45%, #62cb31 55%, #ffb606 55%, #ffb606 65%, #e67e22 65%, #e67e22 75%, #e74c3c 85%, #e74c3c 85%, #c0392b 85%, #c0392b 100%);
+}
+
+small, .small{
+  font-size: 90%;
+}
+
+.modal-dialog{
+  margin-top: 80px;
+}
+
+.client-info{
+  color: #9d9fa2;
+}
+
+label{
+  color: #34495e;
+  font-weight: 600;
+}
+
+.font-bold{
+  font-weight: 600;
+}
