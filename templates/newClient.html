@@ -9,54 +9,66 @@
         <div id="page-wrapper" style="height:100%">
 
             <div class="container-fluid">
-              <form action="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}" method="POST" role="form">
+              <form id="clientForm" action="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}" method="POST" role="form">
 
                 <div id="form-wrapper" class="col-lg-10">
                   <div class="row ">
                     <div class="col-lg-6 form-group">
                         <label>Name</label>
-                        <input name="firstName" class="form-control" placeholder="{{if eq .Client.FirstName ""}} Enter a Name {{end}}" value="{{.Client.FirstName}}">
+                        <input id="firstName" name="firstName" class="form-control" placeholder="{{if eq .Client.FirstName ""}} Enter a Name {{end}}" value="{{.Client.FirstName}}">
                     </div>
                     <div class="col-lg-6 form-group">
                         <label>Name</label>
-                        <input name="lastName" class="form-control" placeholder="{{if eq .Client.LastName ""}} Enter a Name {{end}}" value="{{.Client.LastName}}">
+                        <input id="lastName" name="lastName" class="form-control" placeholder="{{if eq .Client.LastName ""}} Enter a Name {{end}}" value="{{.Client.LastName}}">
                     </div>
                   </div>
                   <div class="row ">
                     <div class="col-lg-12 form-group">
                         <label>Address</label>
-                        <input name="address" class="form-control" placeholder="{{if eq .Client.Address ""}} Enter an Address {{end}}" value="{{.Client.Address}}">
+                        <input id="address" name="address" class="form-control" placeholder="{{if eq .Client.Address ""}} Enter an Address {{end}}" value="{{.Client.Address}}">
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-3 form-group">
                         <label>City</label>
-                        <input name="city" class="form-control" placeholder="{{if eq .Client.City ""}} City {{end}}" value="{{.Client.City}}">
+                        <input id="city" name="city" class="form-control" placeholder="{{if eq .Client.City ""}} City {{end}}" value="{{.Client.City}}">
                     </div>
                     <div class="col-lg-1 form-group">
                         <label>State</label>
-                        <input name="state" class="form-control" placeholder="{{if eq .Client.State ""}}--{{end}}" value="{{.Client.State}}">
+                        <input id="state" name="state" class="form-control" maxlength="2" placeholder="{{if eq .Client.State ""}}--{{end}}" value="{{.Client.State}}">
                     </div>
                     <div class="col-lg-2 form-group">
                         <label>Zip Code</label>
-                        <input name="zip" class="form-control" placeholder="{{if eq .Client.Zip ""}} Code {{end}}" value="{{.Client.Zip}}">
+                        <input id="zip" name="zip" class="form-control" maxlength="5" placeholder="{{if eq .Client.Zip ""}} Code {{end}}" value="{{.Client.Zip}}">
                     </div>
                   </div>
 
                   <div class="row ">
                     <div class="col-lg-3 form-group">
                         <label>Phone Number</label>
-                        <input name="phone" class="form-control" placeholder="{{if eq .Client.Phone ""}} xxx-xxx-xxxx {{end}}" value="{{.Client.Phone}}">
+                        <input id="phone" name="phone" class="form-control"  maxlength="12" placeholder="{{if eq .Client.Phone ""}} xxx-xxx-xxxx {{end}}" value="{{.Client.Phone}}">
                     </div>
                   </div>
                   <div class="row ">
                     <div class="col-lg-2 form-group">
                         <label>Entrance Date</label>
-                        <input name="entranceDate" data-provide="datepicker" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.EntranceDate}}">
+                        <input id="entranceDate" name="entranceDate" data-provide="datepicker" class="form-control" placeholder="{{if eq .Client.EntranceDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.EntranceDate}}">
                     </div>
+                  </div>
+                  <div class="row ">
                     <div class="col-lg-2 form-group">
                         <label>Transaction Date</label>
-                        <input data-provide="datepicker" name="transactionDate" class="form-control date" placeholder="{{if eq .Client.TransactionDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.TransactionDate}}">
+                        <input id="transactionDate" data-provide="datepicker" name="transactionDate" class="form-control date" placeholder="{{if eq .Client.TransactionDate ""}} mm/dd/yyyy  {{end}}" value="{{.Client.TransactionDate}}">
+                    </div>
+                    <div class="col-lg-3 form-group">
+                        <label>Last Transaction</label>
+                        <input id="lastTransaction" name="lastTransaction" class="form-control" placeholder="{{if eq .Client.LastTransaction ""}} Transaction  {{end}}" value="{{.Client.LastTransaction}}">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 form-group">
+                      <label>Notes</label>
+                      <textarea id="notes" name="notes" class="form-control" rows="5" >{{.Client.Notes}}</textarea>
                     </div>
                   </div>
                   <div class="row">

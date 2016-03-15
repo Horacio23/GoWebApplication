@@ -41,10 +41,12 @@ func (this *updateClientController) handle(w http.ResponseWriter, req *http.Requ
 				zip := req.FormValue("zip")
 				phone := req.FormValue("phone")
 				entranceDate := req.FormValue("entranceDate")
+				lastTransaction := req.FormValue("lastTransaction")
 				transactionDate := req.FormValue("transactionDate")
+				notes := req.FormValue("notes")
 				
 		
-				if client, ccErr := models.UpdateClient(id, firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate); ccErr == nil{
+				if client, ccErr := models.UpdateClient(id, firstName, lastName, address, city, state, zip, phone, entranceDate, lastTransaction, transactionDate, notes); ccErr == nil{
 					vm.Client = client
 					http.Redirect(responseWriter, req, "/clients", http.StatusFound)
 				}

@@ -34,22 +34,20 @@ func (this *newClientController) handle(w http.ResponseWriter, req *http.Request
 		zip := req.FormValue("zip")
 		phone := req.FormValue("phone")
 		entranceDate := req.FormValue("entranceDate")
+		lastTransaction := req.FormValue("lastTransaction")
 		transactionDate := req.FormValue("transactionDate")
-		client, err := models.CreateClient(firstName, lastName, address, city, state, zip, phone, entranceDate, transactionDate)
+		notes := req.FormValue("notes")
 		
-		if err == nil{
-//			vm.Client.FirstName = firstName
-//			vm.Client.LastName = lastName
-//			vm.Client.Address = address
-//			vm.Client.City = city
-//			vm.Client.State = state
-//			vm.Client.Zip = zip
-//			vm.Client.Phone = phone
-//			vm.Client.EntranceDate = entranceDate
-//			vm.Client.TransactionDate = transactionDate
-
-			vm.Client = client
-			http.Redirect(responseWriter, req, "/clients", http.StatusFound)
+		if(firstName!="" && lastName!="" && address!="" && city!="" && state!="" && entranceDate!="" && transactionDate!=""){
+			client, err := models.CreateClient(firstName, lastName, address, city, state, zip, phone, entranceDate, lastTransaction, transactionDate, notes)
+			
+			if err == nil{
+	
+				vm.Client = client
+				http.Redirect(responseWriter, req, "/clients", http.StatusFound)
+			}
+		}else{
+			responseWriter.WriteHeader(404)
 		}
 		
 	}else{

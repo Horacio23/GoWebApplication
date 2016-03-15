@@ -14,8 +14,8 @@
                       <thead>
                           <tr>
                               <th>Name</th>
-                              <th>Address</th>
-                              <th>Phone Number</th>
+                              <th>Last Transaction</th>
+                              <th>Date</th>
                               <th></th>
                           </tr>
                       </thead>
@@ -24,7 +24,7 @@
                       {{range .Clients}}
                           <tr>
                               <td><a href="#" onclick="getClient({{.Id}})">{{.FirstName}} {{.LastName}}</a></td>
-                              <td onclick="getClient({{.Id}})">{{.EntranceDate}}</td>
+                              <td onclick="getClient({{.Id}})">{{.LastTransaction}}</td>
                               <td>{{.TransactionDate}}</td>
                               <td><a class="btn btn-warning glyphicon glyphicon-pencil small" href="/update/{{.Id}}"></a>
                           </tr>

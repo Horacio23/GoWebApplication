@@ -16,31 +16,34 @@
         </div>
         <div class="row ">
             <div class=" col-lg-6 col-md-offset-3">
-              <small class="font-bold client-info">Phone: {{.Client.Phone}}</small>
+              <small class="font-bold client-info">{{if eq .Client.Phone ""}}{{else}}Phone: {{.Client.Phone}}{{end}}</small>
             </div>
         </div>
       </div>
       <div class="modal-body">
           <!-- First Column-->
-          <div class="row center">
+          <div class="row">
             <div class="form-group col-lg-6">
               <label>Entrance Date</label>
               <div class="form-control-static ">{{.Client.EntranceDate}}</div>
             </div>
+
+          </div>
+          <div class="row">
             <div class="form-group col-lg-6">
               <label>Transaction Date</label>
               <div class="form-control-static ">{{.Client.TransactionDate}}</div>
             </div>
+            <div class="form-group col-lg-6">
+              <label>Last Transaction</label>
+              <div class="form-control-static ">{{.Client.LastTransaction}}</div>
+            </div>
           </div>
-
           <div class="row">
               <div class="form-group col-lg-12">
                 <label>Notes</label>
                 <div>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-                  type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                  essentially unchanged.
+                  {{.Client.Notes}}
                 </div>
               </div>
           </div>
@@ -48,6 +51,7 @@
         <!-- / First Column-->
       </div>
       <div class="modal-footer mymodal">
+        <a href="/update/{{.Client.Id}}" class="btn btn-warning">Edit</a>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div><!-- /.modal-content -->
