@@ -13,17 +13,6 @@
         <li {{if eq . "newClient"}} class=" active" {{end}}>
             <a href="/newClient"><i class="fa fa-fw fa-edit"></i> Create New Client</a>
         </li>
-        <li>
-            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-            <ul id="demo" class="collapse">
-                <li class="{{if eq . "other"}} active {{end}}">
-                    <a href="#">Dropdown Item</a>
-                </li class="{{if eq . "other"}} active {{end}}">
-                <li>
-                    <a href="#">Dropdown Item</a>
-                </li>
-            </ul>
-        </li>
     </ul>
 </div>
 <!-- /.navbar-collapse -->

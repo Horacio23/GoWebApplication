@@ -14,12 +14,12 @@
                 <div id="form-wrapper" class="col-lg-10">
                   <div class="row ">
                     <div class="col-lg-6 form-group">
-                        <label>Name</label>
-                        <input id="firstName" name="firstName" class="form-control" placeholder="{{if eq .Client.FirstName ""}} Enter a Name {{end}}" value="{{.Client.FirstName}}">
+                        <label>First Name</label>
+                        <input id="firstName" name="firstName" class="form-control" placeholder="{{if eq .Client.FirstName ""}} Enter a First Name {{end}}" value="{{.Client.FirstName}}">
                     </div>
                     <div class="col-lg-6 form-group">
-                        <label>Name</label>
-                        <input id="lastName" name="lastName" class="form-control" placeholder="{{if eq .Client.LastName ""}} Enter a Name {{end}}" value="{{.Client.LastName}}">
+                        <label>Last Name</label>
+                        <input id="lastName" name="lastName" class="form-control" placeholder="{{if eq .Client.LastName ""}} Enter a Last Name {{end}}" value="{{.Client.LastName}}">
                     </div>
                   </div>
                   <div class="row ">
@@ -72,9 +72,8 @@
                     </div>
                   </div>
                   <div class="row">
-                      <div class="col-lg-2">
                           <button class="btn btn-primary" type="submit"> {{if eq .Active "newClient"}} Create {{else}} Save {{end}}</button>
-                      </div>
+                          {{if eq .Active "update"}}<a class="btn btn-danger" onclick="deleteConfirmation({{.Client.Id}})">Delete</a>{{end}}
                   </div>
               </div>
                 </form>
@@ -83,10 +82,9 @@
 
         </div>
         <!-- /#page-wrapper -->
-
+        <div id="deleteModalContainer"></div>
     </div>
     <!-- /#wrapper -->
-
       {{template "_footer.html"}}
 
 </body>

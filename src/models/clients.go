@@ -191,6 +191,22 @@ func UpdateClient(id int, firstName string, lastName string, address string, cit
 	
 }
 
+func DeleteClient(id int) (bool, error) {
+	db, err := getDBConnection()
+	
+	if err == nil {
+		defer db.Close()
+		if _,dbErr := db.Query(`DELETE FROM clients WHERE id=$1`, id); dbErr==nil {
+			return true, nil
+		}else{
+			return false, errors.New("Unalbe to delete the client: "+dbErr.Error())
+		} 
+
+	}else{
+		return false, errors.New("Unalbe to get a database connection in delete"+err.Error())
+	}
+
+}
 
 
 

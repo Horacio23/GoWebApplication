@@ -18,6 +18,10 @@ small, .small{
   color: #9d9fa2;
 }
 
+.error{
+  color:#ff0000;
+}
+
 label{
   color: #34495e;
   font-weight: 600;

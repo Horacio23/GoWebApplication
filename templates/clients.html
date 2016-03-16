@@ -26,7 +26,10 @@
                               <td><a href="#" onclick="getClient({{.Id}})">{{.FirstName}} {{.LastName}}</a></td>
                               <td onclick="getClient({{.Id}})">{{.LastTransaction}}</td>
                               <td>{{.TransactionDate}}</td>
-                              <td><a class="btn btn-warning glyphicon glyphicon-pencil small" href="/update/{{.Id}}"></a>
+                              <td style="float:right;">
+                                <a class="btn btn-default glyphicon glyphicon-pencil" href="/update/{{.Id}}"></a>
+                                <button class="btn btn-danger glyphicon glyphicon-remove" onclick="deleteConfirmation({{.Id}})"></button>
+                              </td>
                           </tr>
 
                       {{end}}
@@ -40,20 +43,10 @@
         </div>
         <!-- /#page-wrapper -->
 
+        <div id="deleteModalContainer"></div>
     </div>
     <!-- /#wrapper -->
-    <script>
-      function getClient(id){
-        $.ajax("/client/"+id).done(function(data){
-            console.log("yay, we got the data");
-            console.log(data);
-            $("#tempModal").html(data);
-            $("#clientModal").modal("show");
-          }).fail(function(){
-            alert("Your fault");
-          })
-      }
-    </script>
+
     {{template "_footer.html"}}
 
 </body>

@@ -2,8 +2,6 @@ package util
 
 import (
 	"time"
-	//"strconv"
-	"fmt"
 )
 
 func GetDate(date time.Time) string {
@@ -16,6 +14,5 @@ func GetDate(date time.Time) string {
 	const layout = "01/02/2006"
 	
 	newDate := date.Format(layout)
-	fmt.Println(newDate)
 	return newDate
 }

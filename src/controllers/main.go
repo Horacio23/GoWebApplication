@@ -28,17 +28,20 @@ func Register(templates *template.Template) {
 	clientsController.template = templates.Lookup("clients.html")
 	router.HandleFunc("/clients",clientsController.get)
 	
-	clientController := new(clientController)
-	clientController.template = templates.Lookup("clientModal.html")
-	router.HandleFunc("/client/{id}",clientController.get)
+	cController := new(clientController)
+	cController.template = templates.Lookup("clientModal.html")
+	router.HandleFunc("/client/{id}",cController.get)
 	
-	newClientController := new(newClientController)
+	newClientController := new(clientController)
 	newClientController.template = templates.Lookup("newClient.html")
-	router.HandleFunc("/newClient",newClientController.handle)
+	router.HandleFunc("/newClient",newClientController.post)
 	
-	updateClientController := new(updateClientController)
+	updateClientController := new(clientController)
 	updateClientController.template = templates.Lookup("newClient.html") //same page as new client
-	router.HandleFunc("/update/{id}", updateClientController.handle)
+	router.HandleFunc("/update/{id}", updateClientController.update)
+	
+	deleteClientController := new(clientController)
+	router.HandleFunc("/delete/{id}", deleteClientController.remove)
 	
 	
 	
