@@ -4,20 +4,20 @@ $(document).ready(function(){
     rules: {
       firstName: "required",
       lastName: "required",
-      address: "required",
-      city: "required",
-      state:{
-        required: true,
-        minlength:2
-      },
+      // address: "required",
+      // city: "required",
+      // state:{
+      //   required: true,
+      //   minlength:2
+      // },
       phone: {
         number: true,
         minlength:10
       },
-      zip: {
-        required: true,
-        minlength:5
-      },
+      // zip: {
+      //   required: true,
+      //   minlength:5
+      // },
       lastTransaction: "required",
       entranceDate: "required",
       transactionDate: "required"

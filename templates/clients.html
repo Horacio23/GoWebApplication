@@ -26,9 +26,11 @@
                               <td><a href="#" onclick="getClient({{.Id}})">{{.FirstName}} {{.LastName}}</a></td>
                               <td onclick="getClient({{.Id}})">{{.LastTransaction}}</td>
                               <td>{{.TransactionDate}}</td>
-                              <td style="float:right;">
-                                <a class="btn btn-default glyphicon glyphicon-pencil" href="/update/{{.Id}}"></a>
-                                <button class="btn btn-danger glyphicon glyphicon-remove" onclick="deleteConfirmation({{.Id}})"></button>
+                              <td >
+                                <div style="float:right;">
+                                  <a class="btn btn-default glyphicon glyphicon-pencil" href="/update/{{.Id}}"></a>
+                                  <button class="btn btn-danger glyphicon glyphicon-remove" onclick="deleteConfirmation({{.Id}})"></button>
+                                </div>
                               </td>
                           </tr>
 
