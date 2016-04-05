@@ -16,7 +16,7 @@
         </div>
         <div class="row ">
             <div class=" col-lg-6 col-md-offset-3">
-              <small class="font-bold client-info">{{if eq .Client.Phone ""}}{{else}}Phone: formatPhone({{.Client.Phone}}){{end}}</small>
+              <small class="font-bold client-info">{{if eq .Client.Phone ""}}{{else}}Phone: {{.Client.Phone}}{{end}}</small>
             </div>
         </div>
       </div>
