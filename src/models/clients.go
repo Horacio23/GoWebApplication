@@ -117,20 +117,20 @@ func GetClient(id int) (Client, error) {
 
 }
 
-func CreateClient(firstName string, lastName string, address string, city string, state string, zip string, phone string, entranceDate string, lastTransaction string, transactionDate string, notes string) (Client, error) {
+func CreateClient(client Client) (Client, error) {
 	fmt.Println("Inside Create Client")
 	result := Client{}
-	result.FirstName = firstName
-	result.LastName = lastName
-	result.Address = address
-	result.City = city
-	result.Zip = zip
-	result.State = state
-	result.Phone = phone
-	result.LastTransaction = lastTransaction
-	result.EntranceDate = entranceDate
-	result.TransactionDate = transactionDate
-	result.Notes = notes
+	result.FirstName = client.FirstName
+	result.LastName = client.LastName
+	result.Address = client.Address
+	result.City = client.City
+	result.Zip = client.Zip
+	result.State = client.State
+	result.Phone = client.Phone
+	result.LastTransaction = client.LastTransaction
+	result.EntranceDate = client.EntranceDate
+	result.TransactionDate = client.TransactionDate
+	result.Notes = client.Notes
 
 	db, err := getDBConnection()
 	if err == nil {
@@ -138,7 +138,7 @@ func CreateClient(firstName string, lastName string, address string, city string
 		err := db.QueryRow(`INSERT INTO clients
 			(first_name, last_name, address, city, state, zip, phone, entrance_date, last_transaction, transaction_date, notes)
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-			RETURNING id`, firstName, lastName, address, city, state, zip, phone, entranceDate, lastTransaction, transactionDate, notes).Scan(&result.Id)
+			RETURNING id`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Notes).Scan(&result.Id)
 
 		if err == nil {
 			fmt.Println("The create query ran without errors")
@@ -153,27 +153,27 @@ func CreateClient(firstName string, lastName string, address string, city string
 
 }
 
-func UpdateClient(id int, firstName string, lastName string, address string, city string, state string, zip string, phone string, entranceDate string, lastTransaction string, transactionDate string, notes string) (Client, error) {
+func UpdateClient(client Client) (Client, error) {
 	result := Client{}
-	result.Id = id
-	result.FirstName = firstName
-	result.LastName = lastName
-	result.Address = address
-	result.City = city
-	result.Zip = zip
-	result.State = state
-	result.Phone = phone
-	result.LastTransaction = lastTransaction
-	result.EntranceDate = entranceDate
-	result.TransactionDate = transactionDate
-	result.Notes = notes
+	result.Id = client.Id
+	result.FirstName = client.FirstName
+	result.LastName = client.LastName
+	result.Address = client.Address
+	result.City = client.City
+	result.Zip = client.Zip
+	result.State = client.State
+	result.Phone = client.Phone
+	result.LastTransaction = client.LastTransaction
+	result.EntranceDate = client.EntranceDate
+	result.TransactionDate = client.TransactionDate
+	result.Notes = client.Notes
 
 	db, err := getDBConnection()
 	if err == nil {
 		defer db.Close()
 		_, err := db.Query(`UPDATE clients
 			set first_name=$1, last_name=$2, address=$3, city=$4, state=$5, zip=$6, phone=$7, entrance_date=$8, last_transaction=$9, transaction_date=$10, notes=$11
-			WHERE id=$12`, firstName, lastName, address, city, state, zip, phone, entranceDate, lastTransaction, transactionDate, notes, id)
+			WHERE id=$12`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Notes, client.Id)
 
 		if err == nil {
 			return result, nil

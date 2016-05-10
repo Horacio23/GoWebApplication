@@ -1,12 +1,27 @@
 package models
 
 import (
+	"GoWebApplication/src/models"
 	"fmt"
 	"testing"
 )
 
 func Test_InsertingNewClient(t *testing.T) {
-	client, err := CreateClient("Horacio", "Delgado", "1235 sd 123 st", "Miami", "FL", "33192", "789-234-2341", "2013-02-02", "2013-02-23")
+
+	client := models.Client{}
+	client.FirstName = "firstName"
+	client.LastName = "lastName"
+	client.Address = "address"
+	client.City = "city"
+	client.State = "FL"
+	client.Zip = "78954"
+	client.Phone = "7896545568"
+	client.EntranceDate = "entranceDate"
+	client.LastTransaction = "05/17/2016"
+	client.TransactionDate = "05/17/2016"
+	client.Notes = "notes"
+
+	client, err := CreateClient()
 	if err == nil {
 		fmt.Println(client)
 	} else {

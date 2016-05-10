@@ -87,19 +87,19 @@ func (this *clientController) update(w http.ResponseWriter, req *http.Request) {
 
 			//This part handles what to do if the request was a post
 			if req.Method == "POST" {
-				firstName := req.FormValue("firstName")
-				lastName := req.FormValue("lastName")
-				address := req.FormValue("address")
-				city := req.FormValue("city")
-				state := req.FormValue("state")
-				zip := req.FormValue("zip")
-				phone := req.FormValue("phone")
-				entranceDate := req.FormValue("entranceDate")
-				lastTransaction := req.FormValue("lastTransaction")
-				transactionDate := req.FormValue("transactionDate")
-				notes := req.FormValue("notes")
+				client.FirstName = req.FormValue("firstName")
+				client.LastName = req.FormValue("lastName")
+				client.Address = req.FormValue("address")
+				client.City = req.FormValue("city")
+				client.State = req.FormValue("state")
+				client.Zip = req.FormValue("zip")
+				client.Phone = req.FormValue("phone")
+				client.EntranceDate = req.FormValue("entranceDate")
+				client.LastTransaction = req.FormValue("lastTransaction")
+				client.TransactionDate = req.FormValue("transactionDate")
+				client.Notes = req.FormValue("notes")
 
-				if client, ccErr := models.UpdateClient(id, firstName, lastName, address, city, state, zip, phone, entranceDate, lastTransaction, transactionDate, notes); ccErr == nil {
+				if client, ccErr := models.UpdateClient(client); ccErr == nil {
 					vm.Client = client
 					http.Redirect(responseWriter, req, "/clients", http.StatusFound)
 				}
@@ -122,24 +122,26 @@ func (this *clientController) post(w http.ResponseWriter, req *http.Request) {
 	responseWriter := util.GetResponseWriter(w, req)
 	defer responseWriter.Close()
 
+	client := models.Client{}
+
 	//This part handles what to do if the request was a post
 	if req.Method == "POST" {
 		println("POST method received for New Client")
 
-		firstName := req.FormValue("firstName")
-		lastName := req.FormValue("lastName")
-		address := req.FormValue("address")
-		city := req.FormValue("city")
-		state := req.FormValue("state")
-		zip := req.FormValue("zip")
-		phone := req.FormValue("phone")
-		entranceDate := req.FormValue("entranceDate")
-		lastTransaction := req.FormValue("lastTransaction")
-		transactionDate := req.FormValue("transactionDate")
-		notes := req.FormValue("notes")
+		client.FirstName = req.FormValue("firstName")
+		client.LastName = req.FormValue("lastName")
+		client.Address = req.FormValue("address")
+		client.City = req.FormValue("city")
+		client.State = req.FormValue("state")
+		client.Zip = req.FormValue("zip")
+		client.Phone = req.FormValue("phone")
+		client.EntranceDate = req.FormValue("entranceDate")
+		client.LastTransaction = req.FormValue("lastTransaction")
+		client.TransactionDate = req.FormValue("transactionDate")
+		client.Notes = req.FormValue("notes")
 
-		if firstName != "" && lastName != "" && address != "" && city != "" && state != "" && entranceDate != "" && transactionDate != "" {
-			_, err := models.CreateClient(firstName, lastName, address, city, state, zip, phone, entranceDate, lastTransaction, transactionDate, notes)
+		if client.FirstName != "" && client.LastName != "" && client.Address != "" && client.City != "" && client.State != "" && client.EntranceDate != "" && client.TransactionDate != "" {
+			_, err := models.CreateClient(client)
 
 			if err == nil {
 
