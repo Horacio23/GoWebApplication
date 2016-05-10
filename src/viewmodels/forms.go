@@ -1,46 +1,42 @@
 package viewmodels
 
-import (
-
-)
-
 type Forms struct {
-	Title string
+	Title  string
 	Active string
-	Forms []Form
+	Forms  []Form
 }
 
 type Form struct {
-	Title string
+	Title   string
 	Content string
-	Id int
+	Id      int
 }
 
 func GetForms() Forms {
-	
+
 	result := Forms{
-		Title: "Forms",
+		Title:  "Forms",
 		Active: "forms",
 	}
 
 	form1 := Form{
-		Title: "I-130",
+		Title:   "I-130",
 		Content: "The content for the i-130 form",
-		Id:1,
+		Id:      1,
 	}
 
 	form2 := Form{
-		Title: "1099",
+		Title:   "1099",
 		Content: "The other conntent",
-		Id:2,
+		Id:      2,
 	}
 
 	form3 := Form{
-		Title: "From3",
+		Title:   "From3",
 		Content: "The conten form3",
-		Id:3,
+		Id:      3,
 	}
-	
+
 	result.Forms = []Form{
 		form1,
 		form2,
@@ -48,6 +44,5 @@ func GetForms() Forms {
 	}
 
 	return result
-	
-}
 
+}

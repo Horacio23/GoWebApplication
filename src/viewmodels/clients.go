@@ -1,43 +1,22 @@
 package viewmodels
 
 import (
-	"models"
+	"GoWebApplication/src/models"
 )
 
 type Clients struct {
-	Title string
-	Active string
+	Title   string
+	Active  string
 	Clients []models.Client
 }
 
-
 func GetClients() Clients {
 	//TODO: get list of clients from the database
-	
+
 	result := Clients{
-		Title: "Clients",
+		Title:  "Clients",
 		Active: "clients",
 	}
 
 	return result
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

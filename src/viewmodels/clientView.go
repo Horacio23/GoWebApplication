@@ -1,21 +1,21 @@
 package viewmodels
 
 import (
-	"models"
+	"GoWebApplication/src/models"
 )
 
 type ClientView struct {
-	Title string
+	Title  string
 	Active string
 	Client models.Client
 }
 
 func GetClientView() ClientView {
 	result := ClientView{
-		Title: "Client",
+		Title:  "Client",
 		Active: "clients",
 	}
 
 	return result
-	
+
 }
