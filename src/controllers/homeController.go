@@ -6,6 +6,7 @@ import (
 	"GoWebApplication/src/viewmodels"
 	"fmt"
 	"net/http"
+	"strconv"
 	"text/template"
 	"time"
 )
@@ -110,6 +111,32 @@ func (this *homeController) signup(w http.ResponseWriter, req *http.Request) {
 	}
 
 	this.signupTemplate.Execute(responseWriter, vm)
+}
+
+func (this *homeController) logout(w http.ResponseWriter, req *http.Request) {
+
+	ck, err := req.Cookie("sessionId")
+
+	if err == nil {
+		removedS := models.RemoveSession(ck.Value)
+		if removedS {
+			cookieMonster := &http.Cookie{
+				Name:    "sessionId",
+				Expires: time.Now(),
+				Value:   strconv.FormatInt(time.Now().Unix(), 10),
+			}
+			cookieMonster2 := &http.Cookie{
+				Name:    "user",
+				Expires: time.Now(),
+				Value:   strconv.FormatInt(time.Now().Unix(), 10),
+			}
+
+			http.SetCookie(w, cookieMonster)
+			http.SetCookie(w, cookieMonster2)
+
+			http.Redirect(w, req, "/login", http.StatusFound)
+		}
+	}
 }
 
 func setupSession(member models.Member) (sCookie http.Cookie, mCookie http.Cookie, retErr error) {

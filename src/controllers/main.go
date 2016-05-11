@@ -22,6 +22,7 @@ func Register(templates *template.Template) {
 	router.HandleFunc("/home", homeController.get)
 	router.HandleFunc("/login", homeController.login)
 	router.HandleFunc("/signup", homeController.signup)
+	router.HandleFunc("/logout", homeController.logout)
 
 	formsController := new(formsController)
 	formsController.template = templates.Lookup("forms.html")
