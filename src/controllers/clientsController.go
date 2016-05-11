@@ -140,14 +140,13 @@ func (this *clientController) post(w http.ResponseWriter, req *http.Request) {
 		client.TransactionDate = req.FormValue("transactionDate")
 		client.Notes = req.FormValue("notes")
 
-		if client.FirstName != "" && client.LastName != "" && client.Address != "" && client.City != "" && client.State != "" && client.EntranceDate != "" && client.TransactionDate != "" {
-			_, err := models.CreateClient(client)
+		_, err := models.CreateClient(client)
 
-			if err == nil {
-
-				http.Redirect(responseWriter, req, "/clients", http.StatusFound)
-			}
+		if err == nil {
+			fmt.Println("Client was successfully added")
+			http.Redirect(responseWriter, req, "/clients", http.StatusFound)
 		} else {
+			fmt.Println("There was a problem creating the client:", err.Error())
 			responseWriter.WriteHeader(404)
 		}
 
