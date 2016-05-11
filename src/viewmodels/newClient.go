@@ -7,6 +7,7 @@ import (
 type NewClient struct {
 	Title  string
 	Active string
+	User   string
 	Client models.Client
 }
 

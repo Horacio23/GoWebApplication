@@ -47,6 +47,42 @@ func GetMember(username string, password string) (Member, error) {
 
 }
 
+func InsertMember(firstName string, email string, password string) error {
+	db, err := getDBConnection()
+
+	if err == nil {
+		defer db.Close()
+		pwd := sha256.Sum256([]byte(password))
+
+		db.QueryRow(`INSERT INTO member( id, email, password, first_name) VALUES (DEFAULT, $1, $2, $3);`, email, hex.EncodeToString(pwd[:]), firstName)
+
+		return nil
+	} else {
+		return errors.New("Couldn't connect to the database")
+	}
+}
+
+func GetMemberById(id int) (Member, error) {
+	db, err := getDBConnection()
+	result := Member{}
+
+	if err == nil {
+		defer db.Close()
+
+		row := db.QueryRow(`SELECT id, email, first_name FROM member WHERE id = $1;`, id)
+
+		err = row.Scan(&result.Id, &result.Username, &result.FirstName)
+
+		if err == nil {
+			return result, nil
+		} else {
+			return result, errors.New("Unable to find Member with info provided")
+		}
+	} else {
+		return result, errors.New("Couldn't connect to the database")
+	}
+}
+
 func CreateSession(member Member) (Session, error) {
 	result := Session{}
 	result.MemberId = member.Id
@@ -68,4 +104,21 @@ func CreateSession(member Member) (Session, error) {
 	} else {
 		return result, errors.New("Unable to get a database connection to save the session")
 	}
+}
+
+func RemoveSession(member_id string) bool {
+	db, err := getDBConnection()
+
+	if err == nil {
+		defer db.Close()
+
+		nerr := db.QueryRow(`DELETE FROM session WHERE member_id = $1;`, member_id)
+
+		if nerr == nil {
+			return true
+		}
+		return true
+	}
+
+	return false
 }

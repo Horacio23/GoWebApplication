@@ -7,6 +7,7 @@ import (
 type ClientView struct {
 	Title  string
 	Active string
+	User   string
 	Client models.Client
 }
 

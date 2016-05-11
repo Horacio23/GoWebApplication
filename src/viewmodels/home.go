@@ -3,6 +3,7 @@ package viewmodels
 type Home struct {
 	Title  string
 	Active string
+	User   string
 	Id     int
 }
 
@@ -19,11 +20,13 @@ func GetHome() Home {
 type Login struct {
 	Title  string
 	Active string
+	User   string
+	Error  string
 }
 
 func GetLogin() Login {
 	result := Login{
-		Title:  "Lemonade Stand Society - Login",
+		Title:  "Immigration Program - Login",
 		Active: "",
 	}
 

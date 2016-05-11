@@ -5,16 +5,16 @@
 
 
       <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        {{template "_topbar.html" .Active}}
+        {{template "_topbar.html" .User}}
       </nav>
 
 
       <div class="col-lg-3"></div>
       <div id="page-wrapper" class="col-lg-6">
+          <div>
+              <p>{{.Error}}</p>
+          </div>
           <form action="/login" method="post" role="form">
-
-
-
               <div class="form-group">
                   <label>Username</label>
                   <input name="username" class="form-control" placeholder="Enter Username">

@@ -7,12 +7,11 @@ import (
 type Clients struct {
 	Title   string
 	Active  string
+	User    string
 	Clients []models.Client
 }
 
 func GetClients() Clients {
-	//TODO: get list of clients from the database
-
 	result := Clients{
 		Title:  "Clients",
 		Active: "clients",
