@@ -3,9 +3,12 @@
 IDEAS:
 
 Essentials:
--implementing a delete method (possibly with safeguard so it doest really get deleted)
--add the las transaction, and the notes field to the database
 -check how to use the age function from sql
+-create an email field
+-create a fee field
+-create a transactions table with the client id, transaction date, and transaction fee (that runs every day and puts the transactions of the current date in)
+-different views for each transaction
+-change transaction to be a dropdown
 
 Nice To Have:
 -the template shows the clients with a certain date in a different color
