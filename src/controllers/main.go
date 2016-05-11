@@ -18,8 +18,10 @@ func Register(templates *template.Template) {
 	homeController := new(homeController)
 	homeController.template = templates.Lookup("index.html")
 	homeController.loginTemplate = templates.Lookup("login.html")
+	homeController.signupTemplate = templates.Lookup("signup.html")
 	router.HandleFunc("/home", homeController.get)
 	router.HandleFunc("/login", homeController.login)
+	router.HandleFunc("/signup", homeController.signup)
 
 	formsController := new(formsController)
 	formsController.template = templates.Lookup("forms.html")

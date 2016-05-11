@@ -26,6 +26,23 @@ func (this *clientsController) get(w http.ResponseWriter, req *http.Request) {
 		w.Header().Add("Content-Type", "text/html")
 		responseWriter := util.GetResponseWriter(w, req)
 		defer responseWriter.Close()
+
+		_, err := req.Cookie("sessionId")
+		if err == nil {
+			// get the member cookie and set the displayed name to the member
+			if cookie, err := req.Cookie("user"); err == nil {
+
+				vm.User = cookie.Value
+
+			} else {
+				fmt.Println("Error retrieving the member cookie:", err.Error())
+			}
+
+		} else {
+			// if there is no session cookie then redirect to login
+			http.Redirect(responseWriter, req, "/login", http.StatusFound)
+		}
+
 		this.template.Execute(responseWriter, vm)
 	} else {
 		fmt.Println("Error getting clients: " + err.Error())
@@ -47,21 +64,38 @@ func (this *clientController) get(w http.ResponseWriter, req *http.Request) {
 
 	if scErr == nil {
 		vm := viewmodels.GetClientView()
+		w.Header().Add("Content-Type", "text/html")
+		responseWriter := util.GetResponseWriter(w, req)
+		defer responseWriter.Close()
 
-		client, dbErr := models.GetClient(id)
+		_, err := req.Cookie("sessionId")
+		if err == nil {
+			// get the member cookie and set the displayed name to the member
+			if cookie, err := req.Cookie("user"); err == nil {
 
-		if dbErr == nil {
+				vm.User = cookie.Value
+				client, dbErr := models.GetClient(id)
 
-			vm.Client = client
-			fmt.Println(client)
-			w.Header().Add("Content-Type", "text/html")
-			responseWriter := util.GetResponseWriter(w, req)
-			defer responseWriter.Close()
-			this.template.Execute(responseWriter, vm)
+				if dbErr == nil {
+
+					vm.Client = client
+					fmt.Println(client)
+
+					this.template.Execute(responseWriter, vm)
+				} else {
+					fmt.Println("Error getting client: " + dbErr.Error())
+					w.WriteHeader(404)
+				}
+
+			} else {
+				fmt.Println("Error retrieving the member cookie:", err.Error())
+			}
+
 		} else {
-			fmt.Println("Error getting client: " + dbErr.Error())
-			w.WriteHeader(404)
+			// if there is no session cookie then redirect to login
+			http.Redirect(responseWriter, req, "/login", http.StatusFound)
 		}
+
 	} else {
 		fmt.Println("Error converting string to int: " + scErr.Error())
 	}
@@ -123,38 +157,56 @@ func (this *clientController) post(w http.ResponseWriter, req *http.Request) {
 	defer responseWriter.Close()
 
 	client := models.Client{}
+	vm := viewmodels.GetNewClient()
 
-	//This part handles what to do if the request was a post
-	if req.Method == "POST" {
-		println("POST method received for New Client")
+	_, err := req.Cookie("sessionId")
+	if err == nil {
+		// get the member cookie and set the displayed name to the member
+		if cookie, err := req.Cookie("user"); err == nil {
 
-		client.FirstName = req.FormValue("firstName")
-		client.LastName = req.FormValue("lastName")
-		client.Address = req.FormValue("address")
-		client.City = req.FormValue("city")
-		client.State = req.FormValue("state")
-		client.Zip = req.FormValue("zip")
-		client.Phone = req.FormValue("phone")
-		client.EntranceDate = req.FormValue("entranceDate")
-		client.LastTransaction = req.FormValue("lastTransaction")
-		client.TransactionDate = req.FormValue("transactionDate")
-		client.Notes = req.FormValue("notes")
+			vm.User = cookie.Value
+			if req.Method == "POST" {
+				println("POST method received for New Client")
 
-		_, err := models.CreateClient(client)
+				client.FirstName = req.FormValue("firstName")
+				client.LastName = req.FormValue("lastName")
+				client.Address = req.FormValue("address")
+				client.City = req.FormValue("city")
+				client.State = req.FormValue("state")
+				client.Zip = req.FormValue("zip")
+				client.Phone = req.FormValue("phone")
+				client.EntranceDate = req.FormValue("entranceDate")
+				client.LastTransaction = req.FormValue("lastTransaction")
+				client.TransactionDate = req.FormValue("transactionDate")
+				client.Notes = req.FormValue("notes")
 
-		if err == nil {
-			fmt.Println("Client was successfully added")
-			http.Redirect(responseWriter, req, "/clients", http.StatusFound)
+				_, err := models.CreateClient(client)
+
+				if err == nil {
+					fmt.Println("Client was successfully added")
+					http.Redirect(responseWriter, req, "/clients", http.StatusFound)
+				} else {
+					fmt.Println("There was a problem creating the client:", err.Error())
+					responseWriter.WriteHeader(404)
+				}
+
+			} else {
+
+				responseWriter.Header().Add("Content-Type", "text/html")
+
+				this.template.Execute(responseWriter, vm)
+			}
+
 		} else {
-			fmt.Println("There was a problem creating the client:", err.Error())
-			responseWriter.WriteHeader(404)
+			fmt.Println("Error retrieving the member cookie:", err.Error())
 		}
 
 	} else {
-		vm := viewmodels.GetNewClient()
-		responseWriter.Header().Add("Content-Type", "text/html")
-		this.template.Execute(responseWriter, vm)
+		// if there is no session cookie then redirect to login
+		http.Redirect(responseWriter, req, "/login", http.StatusFound)
 	}
+	//This part handles what to do if the request was a post
+
 }
 
 func (this *clientController) remove(w http.ResponseWriter, req *http.Request) {

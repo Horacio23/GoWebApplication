@@ -14,7 +14,11 @@
           <div>
               <p>{{.Error}}</p>
           </div>
-          <form action="/login" method="post" role="form">
+          <form action="/signup" method="post" role="form">
+              <div class="form-group">
+                  <label>Name</label>
+                  <input name="name" class="form-control" placeholder="Enter your Name">
+              </div>
               <div class="form-group">
                   <label>Username</label>
                   <input name="username" class="form-control" placeholder="Enter Username">
@@ -22,7 +26,7 @@
 
               <div class="form-group">
                   <label>Password</label>
-                  <input name="password" class="form-control" placeholder="Enter Password">
+                  <input type="password" name="password" class="form-control" placeholder="Enter Password">
               </div>
 
 

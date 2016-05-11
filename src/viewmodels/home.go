@@ -32,3 +32,16 @@ func GetLogin() Login {
 
 	return result
 }
+
+type Signup struct {
+	Login
+}
+
+func GetSignup() Signup {
+	result := Signup{}
+	//assignment is not done inline because of object composition
+	result.Title = "Immigration Program - Signup"
+	result.Active = ""
+
+	return result
+}

@@ -29,9 +29,9 @@ func GetMember(username string, password string) (Member, error) {
 		defer db.Close()
 		pwd := sha256.Sum256([]byte(password))
 
-		row := db.QueryRow(`SELECT id, email, first_name
+		row := db.QueryRow(`SELECT id, username, first_name
 			FROM Member
-			WHERE email = $1 AND password = $2`, username, hex.EncodeToString(pwd[:]))
+			WHERE username = $1 AND password = $2`, username, hex.EncodeToString(pwd[:]))
 
 		result := Member{}
 		err = row.Scan(&result.Id, &result.Username, &result.FirstName)
@@ -47,14 +47,14 @@ func GetMember(username string, password string) (Member, error) {
 
 }
 
-func InsertMember(firstName string, email string, password string) error {
+func InsertMember(firstName string, username string, password string) error {
 	db, err := getDBConnection()
 
 	if err == nil {
 		defer db.Close()
 		pwd := sha256.Sum256([]byte(password))
 
-		db.QueryRow(`INSERT INTO member( id, email, password, first_name) VALUES (DEFAULT, $1, $2, $3);`, email, hex.EncodeToString(pwd[:]), firstName)
+		db.QueryRow(`INSERT INTO member( id, username, password, first_name) VALUES (DEFAULT, $1, $2, $3);`, username, hex.EncodeToString(pwd[:]), firstName)
 
 		return nil
 	} else {
@@ -69,7 +69,7 @@ func GetMemberById(id int) (Member, error) {
 	if err == nil {
 		defer db.Close()
 
-		row := db.QueryRow(`SELECT id, email, first_name FROM member WHERE id = $1;`, id)
+		row := db.QueryRow(`SELECT id, username, first_name FROM member WHERE id = $1;`, id)
 
 		err = row.Scan(&result.Id, &result.Username, &result.FirstName)
 

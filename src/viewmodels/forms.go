@@ -3,12 +3,14 @@ package viewmodels
 type Forms struct {
 	Title  string
 	Active string
+	User   string
 	Forms  []Form
 }
 
 type Form struct {
 	Title   string
 	Content string
+	User    string
 	Id      int
 }
 
