@@ -76,3 +76,27 @@ function getClient(id){
       alert("Your fault");
     })
 }
+
+$('#clientForm').submit(function(event){
+    event.preventDefault();
+
+    var formData = new FormData($(this)[0])
+    formData.append("lastTransaction", $(".selectpicker").selectpicker('val'))
+    var url = $('#formAction').val();
+    console.log(url);
+    $.ajax({
+    url: url,
+    type: 'POST',
+    data: formData,
+    async: false,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: function (returndata) {
+        console.log(returndata)
+      window.location.replace("/clients");
+    }
+  });
+
+  return false;
+})
