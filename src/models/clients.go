@@ -4,7 +4,10 @@ import (
 	"GoWebApplication/src/controllers/util"
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
+
+	"github.com/leekchan/accounting"
 )
 
 type Client struct {
@@ -16,9 +19,11 @@ type Client struct {
 	State           string
 	Zip             string
 	Phone           string
+	Email           string
 	LastTransaction string
 	EntranceDate    string
 	TransactionDate string
+	Payment         string
 	Notes           string
 }
 
@@ -42,7 +47,9 @@ func GetClients() ([]Client, error) {
 			var state string
 			var zip string
 			var phone string
+			var email string
 			var lastTransaction string
+			var payment string
 			var notes string
 			var entranceDate time.Time
 			var transactionDate time.Time
@@ -50,7 +57,7 @@ func GetClients() ([]Client, error) {
 			defer row.Close()
 
 			for row.Next() {
-				sErr := row.Scan(&id, &firstName, &lastName, &address, &city, &state, &zip, &phone, &entranceDate, &lastTransaction, &transactionDate, &notes)
+				sErr := row.Scan(&id, &firstName, &lastName, &address, &city, &state, &zip, &phone, &email, &entranceDate, &lastTransaction, &transactionDate, &payment, &notes)
 				if sErr == nil {
 					client := Client{
 						Id:              id,
@@ -61,9 +68,11 @@ func GetClients() ([]Client, error) {
 						State:           state,
 						Zip:             zip,
 						Phone:           phone,
+						Email:           email,
 						EntranceDate:    util.GetDate(entranceDate),
 						LastTransaction: lastTransaction,
 						TransactionDate: util.GetDate(transactionDate),
+						Payment:         payment,
 						Notes:           notes,
 					}
 
@@ -89,31 +98,36 @@ func GetClient(id int) (Client, error) {
 
 	var entranceDate time.Time
 	var transactionDate time.Time
+	ac := accounting.Accounting{Symbol: "$", Precision: 2}
 
 	db, err := getDBConnection()
 
 	if err == nil {
 		defer db.Close()
 		dbErr := db.QueryRow(`SELECT id, first_name, last_name, address, city, state, zip, phone,
-       	entrance_date, last_transaction, transaction_date, notes
-  		FROM clients where id=$1`, id).Scan(&result.Id, &result.FirstName, &result.LastName, &result.Address, &result.City, &result.State, &result.Zip, &result.Phone, &entranceDate, &result.LastTransaction, &transactionDate, &result.Notes)
+        email, entrance_date, last_transaction, transaction_date, payment, notes
+  		FROM clients where id=$1`, id).Scan(&result.Id, &result.FirstName, &result.LastName, &result.Address, &result.City, &result.State, &result.Zip, &result.Phone, &result.Email, &entranceDate, &result.LastTransaction, &transactionDate, &result.Payment, &result.Notes)
 
 		result.EntranceDate = util.GetDate(entranceDate)
 		result.TransactionDate = util.GetDate(transactionDate)
+		if payment, strErr := strconv.ParseFloat(result.Payment, 10); strErr != nil {
+			fmt.Println("Error parsing payment", strErr.Error())
+		} else {
+			result.Payment = ac.FormatMoney(payment)
+		}
 
 		if dbErr == nil {
 			fmt.Println("no error")
+			fmt.Println(result)
 			return result, nil
 		} else {
 			fmt.Println("error in query")
-			return Client{}, errors.New("Unable to create Client in the database: " + err.Error())
+			return Client{}, errors.New("Unable to get Client from the database: " + dbErr.Error())
 		}
 	} else {
 		fmt.Println("error with the db")
 		return result, errors.New("Unable to get a database connection to save the session")
 	}
-
-	return result, nil
 
 }
 
@@ -127,18 +141,20 @@ func CreateClient(client Client) (Client, error) {
 	result.Zip = client.Zip
 	result.State = client.State
 	result.Phone = client.Phone
+	result.Email = client.Email
 	result.LastTransaction = client.LastTransaction
 	result.EntranceDate = client.EntranceDate
 	result.TransactionDate = client.TransactionDate
+	result.Payment = client.Payment
 	result.Notes = client.Notes
 
 	db, err := getDBConnection()
 	if err == nil {
 		defer db.Close()
 		err := db.QueryRow(`INSERT INTO clients
-			(first_name, last_name, address, city, state, zip, phone, entrance_date, last_transaction, transaction_date, notes)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-			RETURNING id`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Notes).Scan(&result.Id)
+			(first_name, last_name, address, city, state, zip, phone, email, entrance_date, last_transaction, transaction_date, payment, notes)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+			RETURNING id`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.Email, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Payment, client.Notes).Scan(&result.Id)
 
 		if err == nil {
 			fmt.Println("The create query ran without errors")
@@ -163,6 +179,7 @@ func UpdateClient(client Client) (Client, error) {
 	result.Zip = client.Zip
 	result.State = client.State
 	result.Phone = client.Phone
+	result.Email = client.Email
 	result.LastTransaction = client.LastTransaction
 	result.EntranceDate = client.EntranceDate
 	result.TransactionDate = client.TransactionDate
@@ -172,8 +189,8 @@ func UpdateClient(client Client) (Client, error) {
 	if err == nil {
 		defer db.Close()
 		_, err := db.Query(`UPDATE clients
-			set first_name=$1, last_name=$2, address=$3, city=$4, state=$5, zip=$6, phone=$7, entrance_date=$8, last_transaction=$9, transaction_date=$10, notes=$11
-			WHERE id=$12`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Notes, client.Id)
+			set first_name=$1, last_name=$2, address=$3, city=$4, state=$5, zip=$6, phone=$7, email=$8, entrance_date=$9, last_transaction=$10, transaction_date=$11, payment=$12, notes=$13
+			WHERE id=$14`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.Email, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Payment, client.Notes, client.Id)
 
 		if err == nil {
 			return result, nil
