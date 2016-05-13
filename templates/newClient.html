@@ -48,6 +48,10 @@
                         <label>Phone Number</label>
                         <input id="phone" name="phone" class="form-control"  maxlength="12" placeholder="{{if eq .Client.Phone ""}} xxx-xxx-xxxx {{end}}" value="{{.Client.Phone}}">
                     </div>
+                    <div class="col-lg-3 form-group">
+                        <label>Email</label>
+                        <input id="email" name="email" class="form-control"  maxlength="12" placeholder="{{if eq .Client.Phone ""}} example@extention.com {{end}}" value="{{.Client.Email}}">
+                    </div>
                   </div>
                   <div class="row ">
                     <div class="col-lg-2 form-group">
@@ -63,6 +67,10 @@
                     <div class="col-lg-3 form-group">
                         <label>Last Transaction</label>
                         <input id="lastTransaction" name="lastTransaction" class="form-control" placeholder="{{if eq .Client.LastTransaction ""}} Transaction  {{end}}" value="{{.Client.LastTransaction}}">
+                    </div>
+                    <div class="col-lg-3 form-group">
+                        <label>Payment Amount</label>
+                        <input id="payment" name="payment" class="form-control" placeholder="{{if eq .Client.Payment ""}} $0.00  {{end}}" value="{{.Client.Payment}}">
                     </div>
                   </div>
                   <div class="row">
