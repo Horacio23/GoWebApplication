@@ -10,7 +10,7 @@
 
             <div class="container-fluid">
               <form id="clientForm" action="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}" method="POST" role="form">
-
+                  <input id="formAction" type="hidden" value="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}">
                 <div id="form-wrapper" class="col-lg-10">
                   <div class="row ">
                     <div class="col-lg-6 form-group">
@@ -66,7 +66,11 @@
                     </div>
                     <div class="col-lg-3 form-group">
                         <label>Last Transaction</label>
-                        <input id="lastTransaction" name="lastTransaction" class="form-control" placeholder="{{if eq .Client.LastTransaction ""}} Transaction  {{end}}" value="{{.Client.LastTransaction}}">
+                        <select id="lastTransaction" class="selectpicker">
+                          <option {{if eq .Client.LastTransaction "I-130"}}selected{{end}}>I-130</option>
+                          <option {{if eq .Client.LastTransaction "Second"}}selected{{end}}>Second</option>
+                          <option {{if eq .Client.LastTransaction "Relish"}}selected{{end}}>Relish</option>
+                        </select>
                     </div>
                     <div class="col-lg-3 form-group">
                         <label>Payment Amount</label>
