@@ -186,9 +186,13 @@ func (this *clientController) post(w http.ResponseWriter, req *http.Request) {
 				client.EntranceDate = req.FormValue("entranceDate")
 				client.LastTransaction = req.FormValue("lastTransaction")
 				client.TransactionDate = req.FormValue("transactionDate")
-				client.Payment = sanitizePaymnet(req.FormValue("payment"))
+				// if no payment was specified, then set payment to 0.00
+				if client.Payment = sanitizePaymnet(req.FormValue("payment")); client.Payment == "" {
+					client.Payment = "0.00"
+				}
 				client.Notes = req.FormValue("notes")
 
+				fmt.Println("Client post:", client)
 				_, err := models.CreateClient(client)
 
 				if err == nil {
