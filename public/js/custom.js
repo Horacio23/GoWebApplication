@@ -12,6 +12,7 @@ $(document).ready(function(){
       // },
       phone: {
         number: true,
+        required: true,
         minlength:10
       },
       // zip: {
