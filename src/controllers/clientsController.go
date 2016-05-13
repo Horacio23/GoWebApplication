@@ -5,7 +5,9 @@ import (
 	"GoWebApplication/src/models"
 	"GoWebApplication/src/viewmodels"
 	"fmt"
+	"log"
 	"net/http"
+	"regexp"
 	"strconv"
 	"text/template"
 
@@ -121,6 +123,7 @@ func (this *clientController) update(w http.ResponseWriter, req *http.Request) {
 
 			//This part handles what to do if the request was a post
 			if req.Method == "POST" {
+
 				client.FirstName = req.FormValue("firstName")
 				client.LastName = req.FormValue("lastName")
 				client.Address = req.FormValue("address")
@@ -128,14 +131,18 @@ func (this *clientController) update(w http.ResponseWriter, req *http.Request) {
 				client.State = req.FormValue("state")
 				client.Zip = req.FormValue("zip")
 				client.Phone = req.FormValue("phone")
+				client.Email = req.FormValue("email")
 				client.EntranceDate = req.FormValue("entranceDate")
 				client.LastTransaction = req.FormValue("lastTransaction")
 				client.TransactionDate = req.FormValue("transactionDate")
+				client.Payment = sanitizePaymnet(req.FormValue("payment"))
 				client.Notes = req.FormValue("notes")
 
 				if client, ccErr := models.UpdateClient(client); ccErr == nil {
 					vm.Client = client
 					http.Redirect(responseWriter, req, "/clients", http.StatusFound)
+				} else {
+					fmt.Println("There was an error updating the client:", ccErr.Error())
 				}
 			}
 
@@ -175,9 +182,11 @@ func (this *clientController) post(w http.ResponseWriter, req *http.Request) {
 				client.State = req.FormValue("state")
 				client.Zip = req.FormValue("zip")
 				client.Phone = req.FormValue("phone")
+				client.Email = req.FormValue("email")
 				client.EntranceDate = req.FormValue("entranceDate")
 				client.LastTransaction = req.FormValue("lastTransaction")
 				client.TransactionDate = req.FormValue("transactionDate")
+				client.Payment = sanitizePaymnet(req.FormValue("payment"))
 				client.Notes = req.FormValue("notes")
 
 				_, err := models.CreateClient(client)
@@ -228,4 +237,13 @@ func (this *clientController) remove(w http.ResponseWriter, req *http.Request) {
 	} else {
 		w.WriteHeader(404)
 	}
+}
+
+func sanitizePaymnet(payment string) string {
+	// the payment field comes in the form of $123.123 this will ignore everything but the number essentials
+	reg, err := regexp.Compile("[^0-9\\.\\-]")
+	if err != nil {
+		log.Fatal(err)
+	}
+	return reg.ReplaceAllString(payment, "")
 }
