@@ -9,12 +9,13 @@
     <a class="navbar-brand" href="/clients">Client Admin</a>
 </div>
 <!-- Top Menu Items -->
+<input id="currentUser" type="hidden" value="{{.}}">
 <ul class="nav navbar-right top-nav">
     {{if eq . ""}}
         <a class="btn" href="/login">Login</a>
     {{else}}
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
+        <li  class="dropdown">
+            <a  href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{.}} <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li class="divider"></li>
                 <li>

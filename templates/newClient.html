@@ -10,7 +10,7 @@
 
             <div class="container-fluid">
               <form id="clientForm" action="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}" method="POST" role="form">
-                  <input id="formAction" type="hidden" value="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}">
+                <input id="formAction" type="hidden" value="/{{if eq .Active "newClient"}}newClient{{else}}update/{{.Client.Id}}{{end}}">
                 <div id="form-wrapper" class="col-lg-10">
                   <div class="row ">
                     <div class="col-lg-6 form-group">
@@ -46,11 +46,11 @@
                   <div class="row ">
                     <div class="col-lg-3 form-group">
                         <label>Phone Number</label>
-                        <input id="phone" name="phone" class="form-control"  maxlength="12" placeholder="{{if eq .Client.Phone ""}} xxx-xxx-xxxx {{end}}" value="{{.Client.Phone}}">
+                        <input id="phone" name="phone" class="form-control"  maxlength="10" placeholder="{{if eq .Client.Phone ""}} xxx-xxx-xxxx {{end}}" value="{{.Client.Phone}}">
                     </div>
                     <div class="col-lg-3 form-group">
                         <label>Email</label>
-                        <input id="email" name="email" class="form-control"  maxlength="12" placeholder="{{if eq .Client.Phone ""}} example@extention.com {{end}}" value="{{.Client.Email}}">
+                        <input id="email" name="email" class="form-control" placeholder="{{if eq .Client.Phone ""}} example@extention.com {{end}}" value="{{.Client.Email}}">
                     </div>
                   </div>
                   <div class="row ">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-lg-3 form-group">
                         <label>Last Transaction</label>
-                        <select id="lastTransaction" class="selectpicker">
+                        <select id="lastTransaction" class="form-control selectpicker">
                           <option {{if eq .Client.LastTransaction "I-130"}}selected{{end}}>I-130</option>
                           <option {{if eq .Client.LastTransaction "I-485"}}selected{{end}}>I-485</option>
                           <option {{if eq .Client.LastTransaction "I-765"}}selected{{end}}>I-765</option>

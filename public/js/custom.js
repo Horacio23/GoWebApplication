@@ -67,14 +67,24 @@ function deleteConfirmation(id){
 }
 
 function getClient(id){
-  $.ajax("/client/"+id).done(function(data){
-      console.log("yay, we got the data");
-      console.log(data);
-      $("#tempModal").html(data);
-      $("#clientModal").modal("show");
-    }).fail(function(){
-      alert("Your fault");
-    })
+
+  $.ajax('/')
+  $.ajax({
+     url: "/client/"+id,
+     type: "GET",
+     async: false,
+     success: function(data){
+         if(data.includes('<meta')){
+              window.location.replace("/login");
+         }else{
+             $("#tempModal").html(data);
+             $("#clientModal").modal("show");
+         }
+     },
+     fail: function(){
+         alert("Your fault");
+     }
+  })
 }
 
 $('#clientForm').submit(function(event){
