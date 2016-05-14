@@ -7,18 +7,29 @@
         <div class="row modal-title">
             <h2 class="col-lg-6 col-md-offset-3"> {{.Client.FirstName}} {{.Client.LastName}}</h2>
         </div>
+         {{if ne .Client.Address ""}}
         <div class="row ">
             <div class="col-lg-6 col-md-offset-3">
               <small class="font-bold client-info">
+
               {{.Client.Address}}, {{.Client.City}}, {{.Client.State}}, {{.Client.Zip}}
+
             </small>
             </div>
         </div>
+         {{end}}
         <div class="row ">
             <div class=" col-lg-6 col-md-offset-3">
-              <small class="font-bold client-info">{{if eq .Client.Phone ""}}{{else}}Phone: {{.Client.Phone}}{{end}}</small>
+              <small class="font-bold client-info">Phone: {{.Client.Phone}}</small>
             </div>
         </div>
+        {{if ne .Client.Email ""}}
+        <div class="row ">
+            <div class=" col-lg-6 col-md-offset-3">
+              <small class="font-bold client-info">Email: {{.Client.Email}}</small>
+            </div>
+        </div>
+        {{end}}
       </div>
       <div class="modal-body">
           <!-- First Column-->
