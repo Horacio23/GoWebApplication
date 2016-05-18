@@ -27,7 +27,15 @@ type Client struct {
 	Notes           string
 }
 
-func GetClients() ([]Client, error) {
+func GetAllClients() ([]Client, error) {
+	return getClients(`SELECT * FROM clients`)
+}
+
+func GetClientsByTransatction(transaction string) {
+	return getClients("SELECT * FROM clients WHERE lastTransaction=" + transaction)
+}
+
+func getClients(query string) ([]Client, error) {
 	//TODO: get list of clients from the database
 	result := []Client{}
 
@@ -36,7 +44,7 @@ func GetClients() ([]Client, error) {
 	if dbErr == nil {
 		defer db.Close()
 
-		row, qErr := db.Query(`SELECT * FROM clients`)
+		row, qErr := db.Query(query)
 
 		if qErr == nil {
 			var id int
