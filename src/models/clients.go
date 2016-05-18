@@ -31,8 +31,9 @@ func GetAllClients() ([]Client, error) {
 	return getClients(`SELECT * FROM clients`)
 }
 
-func GetClientsByTransatction(transaction string) {
-	return getClients("SELECT * FROM clients WHERE lastTransaction=" + transaction)
+func GetClientsByTransaction(transaction string) ([]Client, error) {
+	query := "SELECT * FROM clients WHERE last_transaction='" + transaction + "'"
+	return getClients(query)
 }
 
 func getClients(query string) ([]Client, error) {
