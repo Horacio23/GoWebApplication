@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -148,7 +149,7 @@ func setupSession(member models.Member) (sCookie http.Cookie, mCookie http.Cooki
 		sCookie.Expires = time.Now().Add(1 * time.Hour)
 
 		mCookie.Name = "user"
-		mCookie.Value = member.FirstName
+		mCookie.Value = strings.Title(member.FirstName)
 		mCookie.Expires = time.Now().Add(1 * time.Hour)
 
 	} else {
