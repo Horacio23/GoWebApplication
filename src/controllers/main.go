@@ -31,6 +31,7 @@ func Register(templates *template.Template) {
 	clientsController := new(clientsController)
 	clientsController.template = templates.Lookup("clients.html")
 	router.HandleFunc("/clients", clientsController.get)
+	router.HandleFunc("/clients/{transaction}", clientsController.getClientsByTransaction)
 
 	cController := new(clientController)
 	cController.template = templates.Lookup("clientModal.html")

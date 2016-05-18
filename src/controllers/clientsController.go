@@ -20,7 +20,46 @@ type clientsController struct {
 
 func (this *clientsController) get(w http.ResponseWriter, req *http.Request) {
 	vm := viewmodels.GetClients()
-	clients, err := models.GetClients()
+	clients, err := models.GetAllClients()
+
+	if err == nil {
+		vm.Clients = clients
+
+		w.Header().Add("Content-Type", "text/html")
+		responseWriter := util.GetResponseWriter(w, req)
+		defer responseWriter.Close()
+
+		_, err := req.Cookie("sessionId")
+		if err == nil {
+			// get the member cookie and set the displayed name to the member
+			if cookie, err := req.Cookie("user"); err == nil {
+
+				vm.User = cookie.Value
+
+			} else {
+				fmt.Println("Error retrieving the member cookie:", err.Error())
+			}
+
+		} else {
+			// if there is no session cookie then redirect to login
+			http.Redirect(responseWriter, req, "/login", http.StatusFound)
+		}
+
+		this.template.Execute(responseWriter, vm)
+	} else {
+		fmt.Println("Error getting clients: " + err.Error())
+		w.WriteHeader(404)
+	}
+}
+
+func (this *clientsController) getClientsByTransaction(w http.ResponseWriter, req *http.Request) {
+	vm := viewmodels.GetClients()
+
+	vars := mux.Vars(req) //gets all the variables in the current request
+
+	transaction := vars["transaction"]
+
+	clients, err := models.GetClientsByTransaction(transaction)
 
 	if err == nil {
 		vm.Clients = clients
@@ -57,7 +96,7 @@ type clientController struct {
 }
 
 func (this *clientController) get(w http.ResponseWriter, req *http.Request) {
-	vars := mux.Vars(req) //gets all the variable sin the current request
+	vars := mux.Vars(req) //gets all the variables in the current request
 
 	idRaw := vars["id"]
 	println("received Id " + idRaw)
