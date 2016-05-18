@@ -7,6 +7,6 @@ import (
 )
 
 func getDBConnection() (*sql.DB, error) {
-	db, err := sql.Open("postgres", "dbname=goapp user=postgres password=admin sslmode=disable")
+	db, err := sql.Open("postgres", "dbname=mydb user=postgres password=horacio01 sslmode=disable")
 	return db, err
 }
