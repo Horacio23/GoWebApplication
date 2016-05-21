@@ -10,13 +10,13 @@ type Transaction struct {
 	Date        string
 }
 
-func GetTransactions() ([]Transaction, error) {
+func getTransactions(query string) ([]Transaction, error) {
 	result := []Transaction{}
 
 	if db, dbErr := getDBConnection(); dbErr == nil {
 		defer db.Close()
 
-		if row, err := db.Query("select * from transactions"); err == nil {
+		if row, err := db.Query(query); err == nil {
 			ts := Transaction{}
 			for row.Next() {
 				row.Scan(&ts.ID, &ts.ClientID, &ts.Transaction, &ts.Amount, &ts.Date)
@@ -33,4 +33,12 @@ func GetTransactions() ([]Transaction, error) {
 	}
 
 	return result, nil
+}
+
+func GetTransactionsByProcess(transaction string) ([]Transaction, error) {
+	return getTransactions("select * from transactions where transaction='" + transaction + "'")
+}
+
+func GetAllTransactions() ([]Transaction, error) {
+	return getTransactions("select * from transactions")
 }
