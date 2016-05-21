@@ -48,6 +48,8 @@ func Register(templates *template.Template) {
 	deleteClientController := new(clientController)
 	router.HandleFunc("/delete/{id}", deleteClientController.remove)
 
+	router.HandleFunc("/transactions", getAllTransactions)
+
 	http.Handle("/", router)
 
 	//Resources
