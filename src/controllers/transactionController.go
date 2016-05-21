@@ -17,8 +17,9 @@ func getAllTransactions(w http.ResponseWriter, req *http.Request) {
 
 	if trans, err := models.GetTransactions(); err == nil {
 		if response, err := json.Marshal(trans); err == nil {
-			fmt.Println(response)
-			json.NewEncoder(w).Encode(response)
+
+			responseWriter.Write(response)
+
 		} else {
 			fmt.Println("Error creating a json from the transactions", err.Error())
 		}
