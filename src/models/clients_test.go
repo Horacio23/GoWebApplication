@@ -1,14 +1,13 @@
 package models
 
 import (
-	"GoWebApplication/src/models"
 	"fmt"
 	"testing"
 )
 
 func Test_InsertingNewClient(t *testing.T) {
 
-	client := models.Client{}
+	client := Client{}
 	client.FirstName = "firstName"
 	client.LastName = "lastName"
 	client.Address = "address"
@@ -21,7 +20,7 @@ func Test_InsertingNewClient(t *testing.T) {
 	client.TransactionDate = "05/17/2016"
 	client.Notes = "notes"
 
-	client, err := CreateClient()
+	client, err := CreateClient(client)
 	if err == nil {
 		fmt.Println(client)
 	} else {
@@ -38,6 +37,19 @@ func Test_GetClient(t *testing.T) {
 		t.Log(client.FirstName)
 	} else {
 		t.Log("Getting a client failed")
+		t.FailNow()
+	}
+}
+
+func Test_CheckDate(t *testing.T) {
+	clients, err := CheckDates()
+
+	if err == nil {
+		fmt.Println("the clients are", clients)
+		t.Log("Client array lengths")
+		t.Log(len(clients))
+	} else {
+		t.Log("Getting a client failed:", err.Error())
 		t.FailNow()
 	}
 }

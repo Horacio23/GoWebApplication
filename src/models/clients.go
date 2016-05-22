@@ -142,20 +142,6 @@ func GetClient(id int) (Client, error) {
 
 func CreateClient(client Client) (Client, error) {
 	fmt.Println("Inside Create Client")
-	result := Client{}
-	result.FirstName = client.FirstName
-	result.LastName = client.LastName
-	result.Address = client.Address
-	result.City = client.City
-	result.Zip = client.Zip
-	result.State = client.State
-	result.Phone = client.Phone
-	result.Email = client.Email
-	result.LastTransaction = client.LastTransaction
-	result.EntranceDate = client.EntranceDate
-	result.TransactionDate = client.TransactionDate
-	result.Payment = client.Payment
-	result.Notes = client.Notes
 
 	db, err := getDBConnection()
 	if err == nil {
@@ -163,36 +149,22 @@ func CreateClient(client Client) (Client, error) {
 		err := db.QueryRow(`INSERT INTO clients
 			(first_name, last_name, address, city, state, zip, phone, email, entrance_date, last_transaction, transaction_date, payment, notes)
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-			RETURNING id`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.Email, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Payment, client.Notes).Scan(&result.Id)
+			RETURNING id`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.Email, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Payment, client.Notes).Scan(&client.Id)
 
 		if err == nil {
 			fmt.Println("The create query ran without errors")
-			return result, nil
+			return client, nil
 		} else {
 			fmt.Println("there was a problem creating the client:", err.Error())
 			return Client{}, errors.New("Unable to create Client in the database: " + err.Error())
 		}
 	} else {
-		return result, errors.New("Unable to get a database connection to save the session")
+		return client, errors.New("Unable to get a database connection to save the session")
 	}
 
 }
 
 func UpdateClient(client Client) (Client, error) {
-	result := Client{}
-	result.Id = client.Id
-	result.FirstName = client.FirstName
-	result.LastName = client.LastName
-	result.Address = client.Address
-	result.City = client.City
-	result.Zip = client.Zip
-	result.State = client.State
-	result.Phone = client.Phone
-	result.Email = client.Email
-	result.LastTransaction = client.LastTransaction
-	result.EntranceDate = client.EntranceDate
-	result.TransactionDate = client.TransactionDate
-	result.Notes = client.Notes
 
 	db, err := getDBConnection()
 	if err == nil {
@@ -202,12 +174,12 @@ func UpdateClient(client Client) (Client, error) {
 			WHERE id=$14`, client.FirstName, client.LastName, client.Address, client.City, client.State, client.Zip, client.Phone, client.Email, client.EntranceDate, client.LastTransaction, client.TransactionDate, client.Payment, client.Notes, client.Id)
 
 		if err == nil {
-			return result, nil
+			return client, nil
 		} else {
 			return Client{}, errors.New("Unable to create Client in the database: " + err.Error())
 		}
 	} else {
-		return result, errors.New("Unable to get a database connection to save the session")
+		return client, errors.New("Unable to get a database connection to save the session")
 	}
 
 }
@@ -220,11 +192,28 @@ func DeleteClient(id int) (bool, error) {
 		if _, dbErr := db.Query(`DELETE FROM clients WHERE id=$1`, id); dbErr == nil {
 			return true, nil
 		} else {
-			return false, errors.New("Unalbe to delete the client: " + dbErr.Error())
+			return false, errors.New("Unable to delete the client: " + dbErr.Error())
 		}
 
 	} else {
 		return false, errors.New("Unalbe to get a database connection in delete" + err.Error())
+	}
+
+}
+
+func CheckDates() ([]Client, error) {
+	db, err := getDBConnection()
+
+	if err == nil {
+		defer db.Close()
+		if clients, dbErr := getClients(`SELECT * FROM clients WHERE entrance_date > now()::date-365`); dbErr == nil {
+			return clients, nil
+		} else {
+			return nil, errors.New("Unable to run the check dates method: " + dbErr.Error())
+		}
+
+	} else {
+		return nil, errors.New("Unable to get a database connection in checkDate" + err.Error())
 	}
 
 }
