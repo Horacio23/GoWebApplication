@@ -10,8 +10,13 @@ import (
 	"regexp"
 	"strconv"
 	"text/template"
+	"time"
 
 	"github.com/gorilla/mux"
+)
+
+const (
+	timeFormat = "01/02/2006"
 )
 
 type clientsController struct {
@@ -289,4 +294,20 @@ func sanitizePaymnet(payment string) string {
 		log.Fatal(err)
 	}
 	return reg.ReplaceAllString(payment, "")
+}
+
+func getFiveYearClients(w http.ResponseWriter, req *http.Request) {
+	responseWriter := util.GetResponseWriter(w, req)
+	defer responseWriter.Close()
+
+	if clients, err := models.CheckDates(); err == nil {
+		for _, v := range clients {
+			if date, err := time.Parse(timeFormat, v.EntranceDate); err == nil {
+				fmt.Println(date.Sub(time.Now()))
+			} else {
+				fmt.Println("Error parsing the date in getFiveYearClients:", err.Error())
+			}
+
+		}
+	}
 }
