@@ -116,6 +116,7 @@ function getTransactions(){
         url:"transactions",
         type: "GET"
         success: function(data){
+            //todo: Populate the graphical stuff inside this function
             console.log(data);
         },
         error: function(error){
