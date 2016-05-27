@@ -4,11 +4,8 @@ IDEAS:
 
 Essentials:
 -check how to use the age function from sql
--create an email field
--create a fee field
--create a transactions table with the client id, transaction date, and transaction fee (that runs every day and puts the transactions of the current date in)
 -different views for each transaction
--change transaction to be a dropdown
+-use the transactions in the frontend with some graphic visuals
 
 Nice To Have:
 -the template shows the clients with a certain date in a different color
