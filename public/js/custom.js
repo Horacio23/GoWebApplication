@@ -68,7 +68,6 @@ function deleteConfirmation(id){
 
 function getClient(id){
 
-  $.ajax('/')
   $.ajax({
      url: "/client/"+id,
      type: "GET",
@@ -84,7 +83,7 @@ function getClient(id){
      fail: function(){
          alert("Your fault");
      }
-  })
+  });
 }
 
 $('#clientForm').submit(function(event){

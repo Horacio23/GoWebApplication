@@ -1,7 +1,7 @@
 package models
 
 import (
-	"GoWebApplication/src/controllers/util"
+	"controllers/util"
 	"errors"
 	"fmt"
 	"strconv"

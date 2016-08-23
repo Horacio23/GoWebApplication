@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"GoWebApplication/src/controllers/util"
-	"GoWebApplication/src/models"
-	"GoWebApplication/src/viewmodels"
+	"controllers/util"
 	"fmt"
 	"log"
+	"models"
 	"net/http"
 	"regexp"
 	"strconv"
 	"text/template"
 	"time"
+	"viewmodels"
 
 	"github.com/gorilla/mux"
 )

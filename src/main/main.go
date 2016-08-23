@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoWebApplication/src/controllers"
+	"controllers"
 	"log"
 	"net/http"
 	"os"

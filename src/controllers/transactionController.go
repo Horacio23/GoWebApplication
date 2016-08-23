@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"GoWebApplication/src/models"
-	"GolangWebApp/src/controllers/util"
+	"controllers/util"
 	"encoding/json"
 	"fmt"
+	"models"
 	"net/http"
 
 	"github.com/gorilla/mux"

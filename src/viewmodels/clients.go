@@ -1,7 +1,7 @@
 package viewmodels
 
 import (
-	"GoWebApplication/src/models"
+	"models"
 )
 
 type Clients struct {

@@ -1,15 +1,15 @@
 package controllers
 
 import (
-	"GoWebApplication/src/controllers/util"
-	"GoWebApplication/src/models"
-	"GoWebApplication/src/viewmodels"
+	"controllers/util"
 	"fmt"
+	"models"
 	"net/http"
 	"strconv"
 	"strings"
 	"text/template"
 	"time"
+	"viewmodels"
 )
 
 type homeController struct {

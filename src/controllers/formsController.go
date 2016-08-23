@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"GoWebApplication/src/controllers/util"
-	"GoWebApplication/src/viewmodels"
+	"controllers/util"
 	"fmt"
 	"net/http"
 	"text/template"
+	"viewmodels"
 )
 
 type formsController struct {
