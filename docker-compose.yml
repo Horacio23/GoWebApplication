@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+    go:
+      container_name: gowebapp
+      image: goweb
+      build:
+        context: .
+      ports:
+        - "80:5000"
+      networks:
+        - db-network
+
+    postgres:
+      container_name: postgres
+      image: postgres
+      networks:
+        - db-network
+
+networks:
+  db-network:
+    driver: bridge
