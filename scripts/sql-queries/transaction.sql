@@ -5,4 +5,4 @@ CREATE TABLE transactions (
 	amount character varying(255),
 	date date,
 	PRIMARY KEY (id)
-)
+);

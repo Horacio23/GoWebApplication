@@ -6,6 +6,7 @@ services:
       image: goweb
       build:
         context: .
+        dockerfile: .docker/go.dockerfile
       ports:
         - "80:5000"
       networks:
@@ -13,7 +14,10 @@ services:
 
     postgres:
       container_name: postgres
-      image: postgres
+      image: my-postgres
+      build:
+          context: .
+          dockerfile: .docker/postgres.dockerfile
       networks:
         - db-network
 

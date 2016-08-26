@@ -14,4 +14,4 @@ CREATE TABLE clients (
 	payment numeric,
 	notes text,
 	PRIMARY KEY (id)
-)
+);
