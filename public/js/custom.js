@@ -113,7 +113,7 @@ $('#clientForm').submit(function(event){
 function getTransactions(){
     $.ajax({
         url:"transactions",
-        type: "GET"
+        type: "GET",
         success: function(data){
             //todo: Populate the graphical stuff inside this function
             console.log(data);
