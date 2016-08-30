@@ -7,6 +7,8 @@ services:
       build:
         context: .
         dockerfile: .docker/go.dockerfile
+        args:
+            - proxy=proxy-phoenix.aexp.com:8080
       env_file:
         - .docker/env/web.env
       ports:
